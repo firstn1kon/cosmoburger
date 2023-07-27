@@ -1,0 +1,58 @@
+.tab {
+    display: flex;
+    margin-top: 20px;
+}
+
+.burger-ingredients {
+    margin-top: 40px;
+}
+
+.title {
+    margin-bottom: 24px;
+}
+
+.title:not(:first-child){
+    margin-top: 40px;
+}
+
+.wrapper {
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px 24px;
+    list-style: none;
+    padding: 0;
+}
+
+.item {
+    position: relative;
+    cursor: pointer;
+    width: 252px;
+    transition: .6s transform;
+
+}
+
+.item:hover {
+    transform: translateY(-10px);
+    transition: .4s transform;
+
+}
+
+.currency {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+}
+
+.description {
+    text-align: center;
+    margin: 0;
+}
+
+.scroll {
+    max-height: 65vh;
+    overflow-y: auto;
+    margin-top: 40px;
+}
