@@ -1,9 +1,12 @@
+import PropTypes from 'prop-types';
+
 import { ConstructorElement, Button, CurrencyIcon, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components'
+import { burgerIngredientsCartProptypes } from '../../utils/propTypes';
 
 import styles from './burger-constructor.module.css'
 
 const BurgerConstructor = ({data}) => {
-    
+
     const total = data.reduce((acc,curr) => acc + curr.price, 0);
 
     return (
@@ -51,3 +54,7 @@ const BurgerConstructor = ({data}) => {
     )
 }
 export default BurgerConstructor
+
+BurgerConstructor.propTypes = {
+    data: PropTypes.arrayOf(burgerIngredientsCartProptypes).isRequired
+}
