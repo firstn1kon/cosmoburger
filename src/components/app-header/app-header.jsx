@@ -1,11 +1,9 @@
-import { Component } from 'react';
-
 import { Logo, BurgerIcon, ListIcon, ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 
 import styles from './app-header.module.css'
 
-class AppHeader extends Component {
-  render() {
+const AppHeader = () => {
+
     return (
         <header className={styles.header}>
           <nav className={`${styles.nav} p-4`}>
@@ -22,6 +20,5 @@ class AppHeader extends Component {
           </nav>
         </header>
     )
-  }
 }
 export default AppHeader;

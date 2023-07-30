@@ -1,13 +1,12 @@
-import { Component } from 'react';
-
 import { data } from '../../utils/data';
 import { cartData } from '../../utils/constructor';
+
 import AppHeader from '../app-header/app-header';
 import BurgerIngredients from '../burger-ingredients/burger-ingredients';
 import BurgerConstructor from '../burger-constructor/burger-constructor';
 
-class App extends Component {
-  render() {
+function App() {
+
     return (
       <>
         <AppHeader/>
@@ -17,7 +16,6 @@ class App extends Component {
         </main>
       </>
     )
-  }
 }
 
 export default App;
