@@ -1,7 +1,6 @@
 import PropTypes from 'prop-types';
 
-import ViewIngredient from './viewIngredient/viewIngredient';
-
+import ViewIngredient from './view-ingredient/view-ingredient';
 import { burgerIngredientsProptypes } from '../../../utils/propTypes';
 
 import styles from '../burger-ingredients.module.css'
