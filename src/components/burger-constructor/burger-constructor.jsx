@@ -6,8 +6,10 @@ import { burgerIngredientsCartProptypes } from '../../utils/propTypes';
 import styles from './burger-constructor.module.css'
 
 const BurgerConstructor = ({data}) => {
-
-    const total = data.reduce((acc,curr) => acc + curr.price, 0);
+  
+    const saucesAndMains = data.filter(item => item.type !== 'bun')
+    const bun = data.find(item => item.type === 'bun')
+    const total = [...saucesAndMains,{...bun},{...bun}].reduce((acc,curr) => acc + curr.price, 0);
 
     return (
         <section style={{paddingTop: '100px'}}>
@@ -15,14 +17,14 @@ const BurgerConstructor = ({data}) => {
                 <ConstructorElement
                     type="top"
                     isLocked={true}
-                    text="Краторная булка N-200i (верх)"
-                    price={200}
-                    thumbnail={'https://code.s3.yandex.net/react/code/bun-02-mobile.png'}
+                    text={`${bun?.name} (верх)`}
+                    price={bun?.price}
+                    thumbnail={bun?.image_mobile}
                     extraClass={styles.top}
                 />
                 <ul className={styles.elements}>
-                    {data.map(({name, _uid, price, image_mobile}) => (
-                        <li className={styles.item} key={_uid}>
+                    {saucesAndMains.map(({name, _id, price, image_mobile}) => (
+                        <li className={styles.item} key={_id}>
                             <div className={styles.wrapper}>
                                 <DragIcon type="primary"/>
                                 <ConstructorElement 
@@ -37,15 +39,15 @@ const BurgerConstructor = ({data}) => {
                 <ConstructorElement
                     type="bottom"
                     isLocked={true}
-                    text="Краторная булка N-200i (низ)"
-                    price={200}
-                    thumbnail={'https://code.s3.yandex.net/react/code/bun-02-mobile.png'}
+                    text={`${bun?.name} (низ)`}
+                    price={bun?.price}
+                    thumbnail={bun?.image_mobile}
                     extraClass={styles.top}
                 />
             </div>
             <div className={styles.result}>
                 <div className={styles.total}>
-                    <p className="text text_type_digits-medium mr-2">{total}</p>
+                    <p className="text text_type_digits-medium mr-2">{total? total : 0}</p>
                     <CurrencyIcon type="primary" />
                 </div>
                 <Button htmlType="button" type="primary" size="large">Оформить заказ</Button>

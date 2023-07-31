@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState} from 'react';
 import PropTypes from 'prop-types';
 
 import Ingredient from './ingredient/ingredient';
@@ -9,6 +9,8 @@ import styles from './burger-ingredients.module.css'
 
 const BurgerIngredients = ({data}) => {
     const [tab, setTab] = useState('one');
+
+
     
     const filterDataByType = (data) => {
         const buns = data.filter(buns => buns.type === 'bun');
@@ -18,6 +20,7 @@ const BurgerIngredients = ({data}) => {
     }
 
     const resultForRender = filterDataByType(data)
+
 
     return (
         <section className={styles['burger-ingredients']}>

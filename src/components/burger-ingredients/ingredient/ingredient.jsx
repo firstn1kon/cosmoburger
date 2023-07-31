@@ -24,7 +24,7 @@ const Ingredient = ({data, type}) => {
     
     return (
         <>
-            <h2 className={`${styles.title} text text_type_main-medium`}>{titleType}</h2>
+            <h2 id={type} className={`${styles.title} text text_type_main-medium`}>{titleType}</h2>
                 <ul className={styles.wrapper}>
                 {data.map(ingredient => <ViewIngredient key={ingredient._id} data={ingredient}/>)}
             </ul>
