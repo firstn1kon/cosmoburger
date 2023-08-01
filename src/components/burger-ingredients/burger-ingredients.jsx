@@ -1,4 +1,4 @@
-import { useState} from 'react';
+import { useState } from 'react';
 
 import Ingredient from './ingredient/ingredient';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
@@ -8,7 +8,7 @@ import styles from './burger-ingredients.module.css'
 
 const BurgerIngredients = ({data}) => {
 
-    const [tab, setTab] = useState('one');
+    const [tab, setTab] = useState('bun');
     
     const filterDataByType = (data) => {
         const buns = data.filter(buns => buns.type === 'bun');
@@ -23,14 +23,14 @@ const BurgerIngredients = ({data}) => {
         <section className={styles['burger-ingredients']}>
             <h1 className='text text_type_main-large'>Соберите бургер</h1>
             <div className={styles.tab}>
-                <Tab value="one" active={tab === 'one'} onClick={setTab}>Булки</Tab>
-                <Tab value="two" active={tab === 'two'} onClick={setTab}>Соусы</Tab>
-                <Tab value="three" active={tab === 'three'} onClick={setTab}>Начинки</Tab>
+                <Tab value="bun" active={tab === 'bun'} onClick={setTab}>Булки</Tab>
+                <Tab value="sauce" active={tab === 'sauce'} onClick={setTab}>Соусы</Tab>
+                <Tab value="main" active={tab === 'main'} onClick={setTab}>Начинки</Tab>
             </div>
             <div className={styles.scroll}>
                 {resultForRender.map(ingredient => {
                     if (ingredient.length !== 0) {
-                        return <Ingredient key={ingredient[0].type} data={ingredient} type={ingredient[0].type}/>
+                        return <Ingredient key={ingredient[0].type} data={ingredient} type={ingredient[0].type} tab={tab}/>
                     }
                     return null
                 })}

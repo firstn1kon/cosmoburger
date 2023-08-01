@@ -1,9 +1,17 @@
+import { useEffect } from 'react';
 import ViewIngredient from './view-ingredient/view-ingredient';
 import { ingredientPropTypes } from '../../../utils/prop-types';
 
 import styles from '../burger-ingredients.module.css'
 
-const Ingredient = ({data, type}) => {
+const Ingredient = ({data, tab, type}) => {
+
+    useEffect(() => {
+        if (tab === type) {
+            const elementCoordinates = document.querySelector(`#${type}`)
+            elementCoordinates.scrollIntoView({behavior: "smooth"});
+        }
+    },[tab, type])
 
     let titleType;
 
@@ -19,7 +27,6 @@ const Ingredient = ({data, type}) => {
             break;
         default: titleType = 'Булка' 
     };
-    
     return (
         <>
             <h2 id={type} className={`${styles.title} text text_type_main-medium`}>{titleType}</h2>

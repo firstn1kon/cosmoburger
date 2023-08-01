@@ -1,4 +1,4 @@
-import { modalOverlayPropTypes } from '../../../utils/prop-types';
+import { modalOverlayPropTypes } from '../../utils/prop-types';
 
 import styles from './modal-overlay.module.css';
 
