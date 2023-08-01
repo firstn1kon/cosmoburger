@@ -1,7 +1,9 @@
 import logo from '../../images/spinner.svg'
 
 import styles from './spinner.module.css'
+
 const Spinner = () => {
+    
     return (
         <div className={styles.overlay}>
             <div className={styles.wrapper}>

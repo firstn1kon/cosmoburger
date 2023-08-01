@@ -1,3 +1,13 @@
+.constructor-section {
+    padding-top: 100px;
+}
+
+.constructor-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
 .elements {
     list-style: none;
     padding: 0;

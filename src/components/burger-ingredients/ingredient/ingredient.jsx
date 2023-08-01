@@ -1,7 +1,5 @@
-import PropTypes from 'prop-types';
-
 import ViewIngredient from './view-ingredient/view-ingredient';
-import { burgerIngredientsProptypes } from '../../../utils/propTypes';
+import { ingredientPropTypes } from '../../../utils/prop-types';
 
 import styles from '../burger-ingredients.module.css'
 
@@ -20,7 +18,7 @@ const Ingredient = ({data, type}) => {
             titleType = 'Соусы';
             break;
         default: titleType = 'Булка' 
-    }
+    };
     
     return (
         <>
@@ -34,9 +32,4 @@ const Ingredient = ({data, type}) => {
 
 export default Ingredient
 
-
-
-Ingredient.propTypes = {
-    data: PropTypes.arrayOf(burgerIngredientsProptypes).isRequired,
-    type: PropTypes.string.isRequired
-  }; 
+Ingredient.propTypes = ingredientPropTypes

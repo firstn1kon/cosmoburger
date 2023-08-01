@@ -5,6 +5,7 @@ import styles from './error.module.css'
 import errorImg from '../../images/error.svg'
 
 const Error = ({err}) => {
+
     return (
         <div className={styles.overlay}>
         <div className={styles.wrapper}>
@@ -15,6 +16,7 @@ const Error = ({err}) => {
     </div>
     )
 }
+
 export default Error
 
 Error.propTypes = {

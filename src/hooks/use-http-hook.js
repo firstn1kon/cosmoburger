@@ -1,6 +1,7 @@
 import { useState } from "react";
 
 export const useHttp = () => {
+
     const [isLoading, setLoading] = useState(false);
     const [isError, setError] = useState(false);
 
@@ -24,7 +25,8 @@ export const useHttp = () => {
             throw e;
         }
 
-    }
+    };
+
     return {
         isLoading, isError, request,
     }

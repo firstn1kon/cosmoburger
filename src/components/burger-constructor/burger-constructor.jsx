@@ -1,19 +1,22 @@
-import PropTypes from 'prop-types';
-
+import useModal from '../../hooks/use-modal';
+import OrderDetails from '../order-details/order-details';
 import { ConstructorElement, Button, CurrencyIcon, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components'
-import { burgerIngredientsCartProptypes } from '../../utils/propTypes';
+
+import { burgerConstructorPropTypes } from '../../utils/prop-types';
 
 import styles from './burger-constructor.module.css'
 
 const BurgerConstructor = ({data}) => {
+    
+    const {renderModal, openModal} = useModal({Component: <OrderDetails uid="034536"/>})
   
     const saucesAndMains = data.filter(item => item.type !== 'bun')
     const bun = data.find(item => item.type === 'bun')
     const total = [...saucesAndMains,{...bun},{...bun}].reduce((acc,curr) => acc + curr.price, 0);
 
     return (
-        <section style={{paddingTop: '100px'}}>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+        <section className={styles['constructor-section']}>
+            <div className={styles['constructor-wrapper']}>
                 <ConstructorElement
                     type="top"
                     isLocked={true}
@@ -50,13 +53,12 @@ const BurgerConstructor = ({data}) => {
                     <p className="text text_type_digits-medium mr-2">{total? total : 0}</p>
                     <CurrencyIcon type="primary" />
                 </div>
-                <Button htmlType="button" type="primary" size="large">Оформить заказ</Button>
+                <Button htmlType="button" type="primary" size="large" onClick={openModal}>Оформить заказ</Button>
+                {renderModal}
             </div>
         </section>
     )
 }
 export default BurgerConstructor
 
-BurgerConstructor.propTypes = {
-    data: PropTypes.arrayOf(burgerIngredientsCartProptypes).isRequired
-}
+BurgerConstructor.propTypes = burgerConstructorPropTypes
