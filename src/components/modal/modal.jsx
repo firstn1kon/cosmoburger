@@ -10,6 +10,11 @@ import styles from './modal.module.css'
 const Modal = ({children, title, close}) => {
 
     useEffect(()=> {
+        const closeByEscape = (e) => {
+            if (e.code === "Escape") {
+                close();
+            }
+        };
         outter.setAttribute('id', 'modal');
         document.body.appendChild(outter);
         document.body.style.overflow="hidden";
@@ -22,11 +27,6 @@ const Modal = ({children, title, close}) => {
         // eslint-disable-next-line
     },[]);
 
-    const closeByEscape = (e) => {
-        if (e.code === "Escape") {
-            close();
-        }
-    };
 
     const outter = document.createElement('div');
 
