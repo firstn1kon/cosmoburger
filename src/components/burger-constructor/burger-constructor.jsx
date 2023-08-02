@@ -1,8 +1,9 @@
+import PropTypes from 'prop-types';
+import { ingredientPropType } from '../../utils/prop-types';
+
 import useModal from '../../hooks/use-modal';
 import OrderDetails from '../order-details/order-details';
 import { ConstructorElement, Button, CurrencyIcon, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components'
-
-import { burgerConstructorPropTypes } from '../../utils/prop-types';
 
 import styles from './burger-constructor.module.css'
 
@@ -61,4 +62,6 @@ const BurgerConstructor = ({data}) => {
 }
 export default BurgerConstructor
 
-BurgerConstructor.propTypes = burgerConstructorPropTypes
+BurgerConstructor.propTypes = {
+    data: PropTypes.arrayOf(ingredientPropType).isRequired
+};

@@ -1,4 +1,4 @@
-import { orderDetailsPropTypes } from '../../utils/prop-types'
+import PropTypes from 'prop-types';
 
 import done from '../../images/done.svg'
 
@@ -21,4 +21,6 @@ const OrderDetails = ({uid}) => {
 
 export default OrderDetails
 
-OrderDetails.propTypes = orderDetailsPropTypes
+OrderDetails.propTypes = {
+    uid: PropTypes.string.isRequired
+};

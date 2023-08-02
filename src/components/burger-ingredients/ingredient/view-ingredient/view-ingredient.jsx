@@ -1,5 +1,6 @@
+import { ingredientPropType } from '../../../../utils/prop-types';
+
 import useModal from '../../../../hooks/use-modal';
-import { viewIngredientPropTypes } from '../../../../utils/prop-types';
 
 import { Counter, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import IngredientDetails from '../../../ingredient-details/ingredient-details';
@@ -9,7 +10,7 @@ import styles from '../../burger-ingredients.module.css'
 const ViewIngredient = ({data}) => {
 
     const {image, price, name} = data;
-    const {renderModal, openModal} = useModal({title: 'Детали ингредиента', Component: <IngredientDetails {...data}/>});
+    const {renderModal, openModal} = useModal({title: 'Детали ингредиента', Component: <IngredientDetails data={data}/>});
 
     return (
         <>
@@ -26,4 +27,6 @@ const ViewIngredient = ({data}) => {
 
 export default ViewIngredient
 
-ViewIngredient.propTypes = viewIngredientPropTypes
+ViewIngredient.propTypes = {
+    data: ingredientPropType.isRequired
+}

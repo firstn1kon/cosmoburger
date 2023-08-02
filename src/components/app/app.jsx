@@ -1,5 +1,5 @@
 import { useEffect, useState  } from 'react';
-import useApiBurger from '../../hooks/use-api-burger-hook';
+import { getAllIngredients } from '../../utils/api';
 
 import AppHeader from '../app-header/app-header';
 import BurgerIngredients from '../burger-ingredients/burger-ingredients';
@@ -10,7 +10,8 @@ import Error from '../error/error';
 function App() {
   
   const [data, setData] = useState([]);
-  const {getAllIngredients, isError, isLoading} = useApiBurger();
+  const [isLoading, setLoading] = useState(true);
+  const [isError, setError] = useState(false);
   
   useEffect(()=> {
     loadIngredients();
@@ -18,9 +19,17 @@ function App() {
   },[]);
 
   const loadIngredients = () => {
+    setError(false);
     getAllIngredients()
-    .then(data => setData(data))
-    .catch(e => console.log(e))
+    .then(data => {
+      setLoading(false)
+      setData(data)
+    })
+    .catch(e => {
+      setLoading(false)
+      setError(e.message);
+      console.log(e)
+    })
   };
 
     return (

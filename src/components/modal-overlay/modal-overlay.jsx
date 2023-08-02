@@ -1,4 +1,4 @@
-import { modalOverlayPropTypes } from '../../utils/prop-types';
+import PropTypes from 'prop-types';
 
 import styles from './modal-overlay.module.css';
 
@@ -11,5 +11,7 @@ const ModalOverlay = ({close}) => {
 
 export default ModalOverlay
 
-ModalOverlay.propTypes = modalOverlayPropTypes
+ModalOverlay.propTypes = {
+    close: PropTypes.func.isRequired
+};
 

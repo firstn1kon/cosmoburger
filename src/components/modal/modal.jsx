@@ -1,4 +1,4 @@
-import { modalPropTypes } from '../../utils/prop-types'
+import PropTypes from 'prop-types';
 import { createPortal } from 'react-dom'
 import { useEffect } from 'react'
 
@@ -46,4 +46,11 @@ const Modal = ({children, title, close}) => {
 
 export default Modal
 
-Modal.propTypes = modalPropTypes
+Modal.propTypes = {
+    children: PropTypes.oneOfType([
+        PropTypes.object,
+        PropTypes.node
+    ]).isRequired,
+    title: PropTypes.string,
+    close: PropTypes.func.isRequired
+}

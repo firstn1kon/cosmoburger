@@ -1,8 +1,9 @@
-import { ingredientDetailsPropTypes } from '../../utils/prop-types';
+import { ingredientPropType } from '../../utils/prop-types';
 
 import styles from './ingredient-details.module.css'
 
-const IngredientDetails = ({name, fat, calories, carbohydrates, proteins, image_large}) => {
+const IngredientDetails = ({data}) => {
+    const {name, fat, calories, carbohydrates, proteins, image_large} = data
 
     return (
         <div className={styles.wrapper}>
@@ -32,4 +33,6 @@ const IngredientDetails = ({name, fat, calories, carbohydrates, proteins, image_
 
 export default IngredientDetails
 
-IngredientDetails.propTypes = ingredientDetailsPropTypes
+IngredientDetails.propTypes = {
+    data: ingredientPropType.isRequired
+}

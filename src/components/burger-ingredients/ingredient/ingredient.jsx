@@ -1,6 +1,8 @@
+import PropTypes from 'prop-types';
+import { ingredientPropType } from '../../../utils/prop-types';
 import { useEffect } from 'react';
+
 import ViewIngredient from './view-ingredient/view-ingredient';
-import { ingredientPropTypes } from '../../../utils/prop-types';
 
 import styles from '../burger-ingredients.module.css'
 
@@ -30,7 +32,7 @@ const Ingredient = ({data, tab, type}) => {
     return (
         <>
             <h2 id={type} className={`${styles.title} text text_type_main-medium`}>{titleType}</h2>
-                <ul className={styles.wrapper}>
+            <ul className={styles.wrapper}>
                 {data.map(ingredient => <ViewIngredient key={ingredient._id} data={ingredient}/>)}
             </ul>
         </>
@@ -39,4 +41,8 @@ const Ingredient = ({data, tab, type}) => {
 
 export default Ingredient
 
-Ingredient.propTypes = ingredientPropTypes
+Ingredient.propTypes = {
+    data: PropTypes.arrayOf(ingredientPropType).isRequired,
+    type: PropTypes.oneOf(["bun", "main", "sauce"]).isRequired,
+    tab: PropTypes.oneOf(["bun", "main", "sauce"]).isRequired
+}
