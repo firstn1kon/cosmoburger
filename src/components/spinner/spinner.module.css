@@ -1,0 +1,29 @@
+.overlay {
+    z-index: 9999;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: rgba(16, 32, 67, 0.8);
+}
+
+.wrapper {
+    display: flex;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.spinner {
+    animation: loader  1.2s linear infinite;
+    display: block;
+}
+
+@keyframes loader {
+    0% {
+        transform: rotate(0deg);
+      }
+      100% {
+        transform: rotate(360deg);
+      }
+}

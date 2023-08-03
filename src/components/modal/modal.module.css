@@ -1,0 +1,19 @@
+.modal {
+    position: fixed;
+    top: 50%;
+    right: 50%;
+    transform: translate(50%, -50%);
+    width: 720px;
+    min-height: 200px;
+    background: #1C1C21;
+    border-radius: 40px;
+    z-index: 200;
+}
+
+.close {
+    position: absolute;
+    top: 50px;
+    right: 40px;
+    cursor: pointer;
+}
+

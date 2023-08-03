@@ -1,0 +1,13 @@
+.overlay {
+    composes: overlay from "../spinner/spinner.module.css";
+}
+
+.wrapper {
+    composes: wrapper from "../spinner/spinner.module.css";
+    flex-direction: column;
+    gap: 15px
+    
+}
+.link {
+    color: #ffffff;
+}
