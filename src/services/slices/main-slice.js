@@ -1,11 +1,15 @@
-import { createSlice, createAsyncThunk, createSelector, nanoid } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk, nanoid } from "@reduxjs/toolkit";
 import { getAllIngredients } from "../../utils/api";
 
 const initialState = {
     ingredients: [],
     isLoading: false,
     isError: false,
-    constructor: [],
+    constructor: {
+        bun: false,
+        saucesAndMains: [],
+        helper: true
+    },
     viewIngredient: {},
     order: {},
 }
@@ -24,27 +28,29 @@ const mainSlice = createSlice({
         addToConstructor: {
             reducer: (state, action) => {
                 if (action.payload.type === 'bun') {
-                    const index = state.constructor.findIndex(item => item.type === 'bun')
-                    index !== -1 
-                        ? state.constructor.splice(index, 1, action.payload)
-                        : state.constructor.push(action.payload)
+                    state.constructor.bun = action.payload;
+                    state.constructor.helper = false;
                 }
                 else {
-                    state.constructor.push(action.payload)
+                    state.constructor.saucesAndMains.unshift(action.payload)
+                    state.constructor.helper = false;
                 }
             },
             prepare: (payload) => ({payload: {...payload, _uid: nanoid()}})
           },
-        deleteFromConstructor: (state, action) => ({...state, constructor: state.constructor.filter(item => item._uid !== action.payload)}),
+        deleteFromConstructor: (state, action) => {
+            const index = state.constructor.saucesAndMains.findIndex(item => item._uid === action.payload)
+            if (index !== -1) state.constructor.saucesAndMains.splice(index, 1)
+        },
         sortInConstrucor: (state, action) => {
             // const dragCard = state.constructor[action.payload.dragIndex];
             // state.constructor.splice(action.payload.dragIndex,0); 
             // state.constructor.splice(action.payload.hoverIndex,0, dragCard)
-            // let temp = state.constructor[action.payload.hoverIndex]
-            // state.constructor[action.payload.hoverIndex] = state.constructor[action.payload.dragIndex];
-            // state.constructor[action.payload.dragIndex] = temp
-            [state.constructor[action.payload.hoverIndex], state.constructor[action.payload.dragIndex]] = [state.constructor[action.payload.dragIndex],state.constructor[action.payload.hoverIndex]]
-
+            let temp = state.constructor.saucesAndMains[action.payload.hoverIndex]
+            state.constructor.saucesAndMains[action.payload.hoverIndex] = state.constructor.saucesAndMains[action.payload.dragIndex];
+            state.constructor.saucesAndMains[action.payload.dragIndex] = temp
+            // [state.constructor.saucesAndMains[action.payload.hoverIndex], state.constructor.saucesAndMains[action.payload.dragIndex]] = 
+            // [state.constructor.saucesAndMains[action.payload.dragIndex],state.constructor.saucesAndMains[action.payload.hoverIndex]]
         },
 
     },

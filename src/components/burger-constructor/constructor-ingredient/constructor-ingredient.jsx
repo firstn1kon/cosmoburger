@@ -1,11 +1,15 @@
+import { useCallback } from 'react';
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useDrag, useDrop } from 'react-dnd';
 import { useRef } from 'react';
+import { useDispatch } from 'react-redux';
+import { deleteFromConstructor, sortInConstrucor } from '../../../services/slices/main-slice';
 import styles from '../burger-constructor.module.css'
 
-const ConstructorIngredient = ({text, _uid, price, thumbnail, handleClose, index, moveCard}) => {
+const ConstructorIngredient = ({text, _uid, price, thumbnail, index}) => {
 
-    const ref = useRef(null)
+    const dispatch = useDispatch();
+    const ref = useRef(null);
 
     const[{opacity, classDrop}, dragRef] = useDrag({
         type: 'ingredients-constructor',
@@ -44,12 +48,17 @@ const ConstructorIngredient = ({text, _uid, price, thumbnail, handleClose, index
             return
           }
           
-          moveCard(dragIndex, hoverIndex)
+          dispatch(sortInConstrucor({dragIndex, hoverIndex}))
           item.index = hoverIndex
         },
       })
 
       dragRef(dropTraget(ref))
+
+    const deleteIngredient = useCallback(() =>  {
+        dispatch(deleteFromConstructor(_uid))
+    },[dispatch, _uid])
+      
     return (
         <li className={`${styles.item}`} key={_uid}  style={{opacity}} data-handler-id={handlerId}>
             <div className={styles.wrapper} ref={ref}>
@@ -58,7 +67,7 @@ const ConstructorIngredient = ({text, _uid, price, thumbnail, handleClose, index
                     text={text} 
                     price={price} 
                     thumbnail={thumbnail}
-                    handleClose={() => handleClose(_uid)}
+                    handleClose={deleteIngredient}
                     extraClass={classDrop}
                 />
             </div>

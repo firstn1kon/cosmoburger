@@ -12,22 +12,16 @@ import styles from '../../burger-ingredients.module.css'
 
 const ViewIngredient = ({data}) => {
 
+    const {image, price, name} = data;
+    const {renderModal, openModal} = useModal({title: 'Детали ингредиента', Component: <IngredientDetails data={data}/>});
+
     const countIngredient = createSelector(
-        (state) => state.main.constructor,
-        (ingredients) => ingredients.filter(item => item._id === data._id).length 
+        (state) => state.main.constructor.saucesAndMains,
+        (state) => state.main.constructor.bun,
+        (ingredients, bun) => data.type === 'bun' && bun._id ===  data._id? 2 : ingredients.filter(item => item._id === data._id).length 
     )
 
     const count = useSelector(countIngredient)
-
-
-
-
-    
-    // const pre = useSelector(state =>  state.main.constructor)
-    // const count =  data.type === 'bun' ? pre.filter(item => item._id === data._id).length * 2 : pre.filter(item => item._id === data._id).length
-
-    const {image, price, name} = data;
-    const {renderModal, openModal} = useModal({title: 'Детали ингредиента', Component: <IngredientDetails data={data}/>});
 
     const[{opacity}, dragRef] = useDrag({
         type: 'ingredients',
@@ -43,7 +37,7 @@ const ViewIngredient = ({data}) => {
                 <img src={image} alt={name}></img>
                 <div className={styles.currency}><p className='text text_type_digits-default'>{price}</p> <CurrencyIcon type="primary" /></div>
                 <p className={styles.description}>{name}</p>
-                <Counter count={data.type === 'bun' ? count * 2: count} size="default" extraClass="m-1"/>
+                {count ? <Counter count={count} size="default" extraClass="m-1"/> : null}
             </li>
             {renderModal}
         </>
