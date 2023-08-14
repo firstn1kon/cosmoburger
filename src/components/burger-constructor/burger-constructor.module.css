@@ -6,6 +6,7 @@
     display: flex;
     flex-direction: column;
     gap: 10px;
+    transition: .3s all;
 }
 
 .elements {
@@ -18,6 +19,7 @@
 
 .item {
     margin-right: 8px;
+    cursor: move;
 }
 
 .item:not(:last-child) {
@@ -49,4 +51,21 @@
 .top {
     margin-left: 30px;
     max-width: 513px;
+}
+
+.drop {
+    animation: drophere 2s infinite ease-out ;
+    background: rgba(156, 214, 156, 0.341);
+}
+
+@keyframes drophere {
+    0% {
+        transform: Scale(0.8);
+    }
+    50% {
+        transform: Scale(1);
+    }
+    100% {
+        transform: Scale(0.8);
+    }
 }

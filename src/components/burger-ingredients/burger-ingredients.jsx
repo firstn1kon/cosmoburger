@@ -1,13 +1,15 @@
 import PropTypes from 'prop-types';
 import { ingredientPropType } from '../../utils/prop-types';
 import { useState } from 'react';
+import { useSelector } from 'react-redux';
 
 import Ingredient from './ingredient/ingredient';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
 
 import styles from './burger-ingredients.module.css'
 
-const BurgerIngredients = ({data}) => {
+const BurgerIngredients = () => {
+    const data = useSelector(state => state.main.ingredients)
 
     const [tab, setTab] = useState('bun');
     
@@ -43,7 +45,7 @@ const BurgerIngredients = ({data}) => {
 export default BurgerIngredients;
 
 BurgerIngredients.propTypes = {
-    data: PropTypes.arrayOf(ingredientPropType).isRequired
+    data: PropTypes.arrayOf(ingredientPropType)
 };
 
 
