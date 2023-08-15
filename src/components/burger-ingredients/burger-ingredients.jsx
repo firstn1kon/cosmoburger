@@ -1,6 +1,4 @@
-import PropTypes from 'prop-types';
-import { ingredientPropType } from '../../utils/prop-types';
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import { useSelector } from 'react-redux';
 
 import Ingredient from './ingredient/ingredient';
@@ -13,14 +11,13 @@ const BurgerIngredients = () => {
 
     const [tab, setTab] = useState('bun');
     
-    const filterDataByType = (data) => {
+    const filterDataByType = useCallback((data) => {
         const buns = data.filter(buns => buns.type === 'bun');
         const main = data.filter(main => main.type === 'main');
         const sauces = data.filter(sauce => sauce.type === 'sauce');
         return [buns, sauces, main];
-    };
-
-    const resultForRender = filterDataByType(data);
+        // eslint-disable-next-line
+    },[data]);
 
     return (
         <section className={styles['burger-ingredients']}>
@@ -31,7 +28,7 @@ const BurgerIngredients = () => {
                 <Tab value="main" active={tab === 'main'} onClick={setTab}>Начинки</Tab>
             </div>
             <div className={styles.scroll}>
-                {resultForRender.map(ingredient => {
+                {filterDataByType(data).map(ingredient => {
                     if (ingredient.length !== 0) {
                         return <Ingredient key={ingredient[0].type} data={ingredient} type={ingredient[0].type} tab={tab}/>
                     }
@@ -43,9 +40,5 @@ const BurgerIngredients = () => {
   }
 
 export default BurgerIngredients;
-
-BurgerIngredients.propTypes = {
-    data: PropTypes.arrayOf(ingredientPropType)
-};
 
 

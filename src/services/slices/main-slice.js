@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk, nanoid } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk, nanoid, createSelector } from "@reduxjs/toolkit";
 import { getAllIngredients } from "../../utils/api";
 
 const initialState = {
@@ -10,8 +10,8 @@ const initialState = {
         saucesAndMains: [],
         helper: true
     },
-    viewIngredient: {},
-    order: {},
+    viewIngredient: null,
+    isIngredientModalOpen: false,
 }
 
 export const ingredientsFetch = createAsyncThunk(
@@ -29,12 +29,11 @@ const mainSlice = createSlice({
             reducer: (state, action) => {
                 if (action.payload.type === 'bun') {
                     state.constructor.bun = action.payload;
-                    state.constructor.helper = false;
                 }
                 else {
                     state.constructor.saucesAndMains.unshift(action.payload)
-                    state.constructor.helper = false;
                 }
+                state.constructor.helper = false;
             },
             prepare: (payload) => ({payload: {...payload, _uid: nanoid()}})
           },
@@ -43,15 +42,17 @@ const mainSlice = createSlice({
             if (index !== -1) state.constructor.saucesAndMains.splice(index, 1)
         },
         sortInConstrucor: (state, action) => {
-            // const dragCard = state.constructor[action.payload.dragIndex];
-            // state.constructor.splice(action.payload.dragIndex,0); 
-            // state.constructor.splice(action.payload.hoverIndex,0, dragCard)
             let temp = state.constructor.saucesAndMains[action.payload.hoverIndex]
             state.constructor.saucesAndMains[action.payload.hoverIndex] = state.constructor.saucesAndMains[action.payload.dragIndex];
             state.constructor.saucesAndMains[action.payload.dragIndex] = temp
-            // [state.constructor.saucesAndMains[action.payload.hoverIndex], state.constructor.saucesAndMains[action.payload.dragIndex]] = 
-            // [state.constructor.saucesAndMains[action.payload.dragIndex],state.constructor.saucesAndMains[action.payload.hoverIndex]]
         },
+        resetConstructor: state => {state.constructor = initialState.constructor},
+        openIngredientModal: state => {state.isIngredientModalOpen = true;},
+        closeIngredientModal: state => {
+            state.isIngredientModalOpen = false
+            state.viewIngredient = null
+        },
+        setViewIngredient: (state, action) => {state.viewIngredient = action.payload}
 
     },
     extraReducers: builder =>
@@ -68,6 +69,12 @@ const mainSlice = createSlice({
             .addDefaultCase(()=> {})
 })
 
+export const dataViewingIngredient = createSelector(
+    (state) => state.main.ingredients,
+    (state) => state.main.viewIngredient,
+    (ingredients, id) => ingredients.find(ingredient => ingredient._id === id)
+)
+
 
 const {actions, reducer} = mainSlice;
 
@@ -79,5 +86,10 @@ export default reducer;
 export const {
     addToConstructor,
     deleteFromConstructor,
-    sortInConstrucor
+    sortInConstrucor,
+    resetConstructor,
+    openIngredientModal,
+    closeIngredientModal,
+    setViewIngredient
+
 } = actions;

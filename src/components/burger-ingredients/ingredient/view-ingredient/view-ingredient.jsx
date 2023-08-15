@@ -1,19 +1,17 @@
 import { ingredientPropType } from '../../../../utils/prop-types';
 import { useDrag } from "react-dnd";
-import { useSelector} from 'react-redux';
-import {createSelector } from "@reduxjs/toolkit";
+import { useSelector, useDispatch } from 'react-redux';
+import { createSelector } from "@reduxjs/toolkit";
+import { openIngredientModal, setViewIngredient } from '../../../../services/slices/main-slice';
 
-import useModal from '../../../../hooks/use-modal';
 
 import { Counter, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components'
-import IngredientDetails from '../../../ingredient-details/ingredient-details';
 
 import styles from '../../burger-ingredients.module.css'
 
 const ViewIngredient = ({data}) => {
 
     const {image, price, name} = data;
-    const {renderModal, openModal} = useModal({title: 'Детали ингредиента', Component: <IngredientDetails data={data}/>});
 
     const countIngredient = createSelector(
         (state) => state.main.constructor.saucesAndMains,
@@ -22,6 +20,7 @@ const ViewIngredient = ({data}) => {
     )
 
     const count = useSelector(countIngredient)
+    const dispatch = useDispatch()
 
     const[{opacity}, dragRef] = useDrag({
         type: 'ingredients',
@@ -31,6 +30,11 @@ const ViewIngredient = ({data}) => {
         })
     });
 
+    const openModal = () => {
+        dispatch(openIngredientModal())
+        dispatch(setViewIngredient(data._id))
+    }
+
     return (
         <>
             <li className={styles.item} onClick={openModal} ref={dragRef} style={{opacity}}>
@@ -39,7 +43,6 @@ const ViewIngredient = ({data}) => {
                 <p className={styles.description}>{name}</p>
                 {count ? <Counter count={count} size="default" extraClass="m-1"/> : null}
             </li>
-            {renderModal}
         </>
     )
 }

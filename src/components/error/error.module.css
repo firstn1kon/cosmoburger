@@ -10,4 +10,10 @@
 }
 .link {
     color: #ffffff;
+    font-size: 26px;
+}
+
+.link:hover {
+    text-decoration: underline;
+    cursor: pointer;
 }

@@ -1,9 +1,10 @@
-import { useCallback } from 'react';
-import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import { useCallback, useRef  } from 'react';
 import { useDrag, useDrop } from 'react-dnd';
-import { useRef } from 'react';
 import { useDispatch } from 'react-redux';
 import { deleteFromConstructor, sortInConstrucor } from '../../../services/slices/main-slice';
+
+import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+
 import styles from '../burger-constructor.module.css'
 
 const ConstructorIngredient = ({text, _uid, price, thumbnail, index}) => {

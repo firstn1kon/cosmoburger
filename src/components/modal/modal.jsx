@@ -7,6 +7,8 @@ import ModalOverlay from '../modal-overlay/modal-overlay'
 
 import styles from './modal.module.css'
 
+
+const outter = document.createElement('div');
 const Modal = ({children, title, close}) => {
 
     useEffect(()=> {
@@ -26,10 +28,7 @@ const Modal = ({children, title, close}) => {
         }
         // eslint-disable-next-line
     },[]);
-
-
-    const outter = document.createElement('div');
-
+    
     return (
         createPortal(
             <>
@@ -52,5 +51,5 @@ Modal.propTypes = {
         PropTypes.node
     ]).isRequired,
     title: PropTypes.string,
-    close: PropTypes.func.isRequired
+    close: PropTypes.func.isRequired,
 }
