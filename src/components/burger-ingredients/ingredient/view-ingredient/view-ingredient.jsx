@@ -3,6 +3,7 @@ import { useDrag } from "react-dnd";
 import { useSelector, useDispatch } from 'react-redux';
 import { createSelector } from "@reduxjs/toolkit";
 import { openIngredientModal, setViewIngredient } from '../../../../services/slices/ingredients-slice';
+import { getBun, getSaucesAndMains } from '../../../../services/slices/selectors';
 
 
 import { Counter, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components'
@@ -14,8 +15,8 @@ const ViewIngredient = ({data}) => {
     const {image, price, name} = data;
 
     const countIngredient = createSelector(
-        (state) => state.kit.saucesAndMains,
-        (state) => state.kit.bun,
+        getSaucesAndMains,
+        getBun,
         (ingredients, bun) => data.type === 'bun' && bun._id ===  data._id? 2 : ingredients.filter(item => item._id === data._id).length 
     )
 

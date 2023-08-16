@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { ingredientsFetch} from '../../services/slices/ingredients-slice';
+import { getIsLoadingIngredients, getIsErrorIngredients } from '../../services/slices/selectors';
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 
@@ -12,7 +13,8 @@ import Error from '../error/error';
 
 function App() {
 
-  const { isLoading, isError } = useSelector(state => state.ingredients)
+  const isLoading = useSelector(getIsLoadingIngredients)
+  const isError = useSelector(getIsErrorIngredients)
   const dispatch = useDispatch();  
 
   useEffect(()=> {

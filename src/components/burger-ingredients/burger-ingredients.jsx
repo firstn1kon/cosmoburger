@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef} from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { setCurrentTab, dataViewingIngredient, closeIngredientModal } from '../../services/slices/ingredients-slice';
+import { setCurrentTab, closeIngredientModal } from '../../services/slices/ingredients-slice';
+import { getIngredients, getCurrentTab, getIsIngredientModalOpen, getModalIngredient } from '../../services/slices/selectors';
 
 import Ingredient from './ingredient/ingredient';
 import Modal from '../modal/modal';
@@ -11,10 +12,10 @@ import styles from './burger-ingredients.module.css'
 
 const BurgerIngredients = () => {
 
-    const data = useSelector(state => state.ingredients.ingredients)
-    const tab = useSelector(state => state.ingredients.currentTab)
-    const isIngredientModalOpen = useSelector(state => state.ingredients.isIngredientModalOpen)
-    const pickIngredient = useSelector(dataViewingIngredient)
+    const data = useSelector(getIngredients)
+    const tab = useSelector(getCurrentTab)
+    const isIngredientModalOpen = useSelector(getIsIngredientModalOpen)
+    const modalIngredient = useSelector(getModalIngredient)
     const dispatch = useDispatch()
 
     const containerRef = useRef(null);
@@ -75,8 +76,8 @@ const BurgerIngredients = () => {
                     return null
                 })}
             </div>
-            {isIngredientModalOpen && pickIngredient 
-                && <Modal  title={'Детали ингредиента'} close={closeModal}><IngredientDetails data={pickIngredient}/></Modal>}
+            {isIngredientModalOpen && modalIngredient 
+                && <Modal  title={'Детали ингредиента'} close={closeModal}><IngredientDetails data={modalIngredient}/></Modal>}
         </section>
     )
   }

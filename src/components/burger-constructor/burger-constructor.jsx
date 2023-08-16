@@ -3,6 +3,7 @@ import { useDrop } from "react-dnd";
 import { useSelector, useDispatch } from 'react-redux';
 import {  addToConstructor, resetConstructor } from '../../services/slices/constructor-slice';
 import { sendOrder, closeOrderModal, resetError } from '../../services/slices/order-slice';
+import { getSaucesAndMains, getBun, getHelper, getIsOrderModalOpen, getIsLoadingOrder, getIsErrorOrder, getNumberOrder } from '../../services/slices/selectors';
 
 import ConstructorIngredient from './constructor-ingredient/constructor-ingredient';
 import OrderDetails from '../order-details/order-details';
@@ -26,9 +27,14 @@ const BurgerConstructor = () => {
         })
     });
 
-    const {saucesAndMains, bun, helper} = useSelector(state => state.kit)
-    const {isOrderModalOpen, isLoading, isError} = useSelector(state => state.order)
-    const {number} = useSelector(state => state.order.data.order)
+    const saucesAndMains = useSelector(getSaucesAndMains)
+    const bun = useSelector(getBun)
+    const helper = useSelector(getHelper)
+    const isOrderModalOpen = useSelector(getIsOrderModalOpen)
+    const isLoading = useSelector(getIsLoadingOrder)
+    const isError = useSelector(getIsErrorOrder)
+    const numberOrder = useSelector(getNumberOrder)
+
     const dispatch = useDispatch();
 
     const total = useMemo(() =>
@@ -90,7 +96,7 @@ const BurgerConstructor = () => {
                 </div>
                 <Button  disabled={helper} htmlType="button" type="primary" size="large" onClick={fetchOrder}>{statusButton}</Button>
             </div>
-            {isOrderModalOpen && number && <Modal close={closeModal}><OrderDetails uid={number}/></Modal>}
+            {isOrderModalOpen && numberOrder && <Modal close={closeModal}><OrderDetails uid={numberOrder}/></Modal>}
             {isError && <Error err={isError} tryAgain={tryAgain}/>}
         </section>
     )

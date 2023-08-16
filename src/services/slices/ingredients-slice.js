@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk, createSelector } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { getAllIngredients } from "../../utils/api";
 
 const initialState = {
@@ -43,12 +43,6 @@ const mainSlice = createSlice({
             })
             .addDefaultCase(()=> {})
 })
-
-export const dataViewingIngredient = createSelector(
-    (state) => state.ingredients.ingredients,
-    (state) => state.ingredients.viewIngredient,
-    (ingredients, id) => ingredients.find(ingredient => ingredient._id === id)
-)
 
 const {actions, reducer} = mainSlice;
 
