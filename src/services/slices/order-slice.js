@@ -63,6 +63,4 @@ export const {
     openOrderModal,
     closeOrderModal,
     resetError
-    
-
 } = actions;

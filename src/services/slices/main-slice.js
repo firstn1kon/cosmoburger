@@ -12,6 +12,7 @@ const initialState = {
     },
     viewIngredient: null,
     isIngredientModalOpen: false,
+    currentTab: "bun"
 }
 
 export const ingredientsFetch = createAsyncThunk(
@@ -52,7 +53,8 @@ const mainSlice = createSlice({
             state.isIngredientModalOpen = false
             state.viewIngredient = null
         },
-        setViewIngredient: (state, action) => {state.viewIngredient = action.payload}
+        setViewIngredient: (state, action) => {state.viewIngredient = action.payload},
+        setCurrentTab: (state, action) => {state.currentTab = action.payload}
 
     },
     extraReducers: builder =>
@@ -90,6 +92,7 @@ export const {
     resetConstructor,
     openIngredientModal,
     closeIngredientModal,
-    setViewIngredient
+    setViewIngredient,
+    setCurrentTab
 
 } = actions;

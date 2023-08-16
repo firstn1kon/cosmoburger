@@ -1,13 +1,16 @@
+import PropTypes from 'prop-types';
 import { useCallback, useRef  } from 'react';
 import { useDrag, useDrop } from 'react-dnd';
 import { useDispatch } from 'react-redux';
 import { deleteFromConstructor, sortInConstrucor } from '../../../services/slices/main-slice';
+import { ingredientConstrucorPropType } from '../../../utils/prop-types';
 
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import styles from '../burger-constructor.module.css'
 
-const ConstructorIngredient = ({text, _uid, price, thumbnail, index}) => {
+const ConstructorIngredient = ({data, index}) => {
+    const {name, _uid, price, image_mobile} = data
 
     const dispatch = useDispatch();
     const ref = useRef(null);
@@ -65,9 +68,9 @@ const ConstructorIngredient = ({text, _uid, price, thumbnail, index}) => {
             <div className={styles.wrapper} ref={ref}>
                 <DragIcon type="primary"/>
                 <ConstructorElement 
-                    text={text} 
+                    text={name} 
                     price={price} 
-                    thumbnail={thumbnail}
+                    thumbnail={image_mobile}
                     handleClose={deleteIngredient}
                     extraClass={classDrop}
                 />
@@ -77,3 +80,8 @@ const ConstructorIngredient = ({text, _uid, price, thumbnail, index}) => {
 }
 
 export default ConstructorIngredient
+
+ConstructorIngredient.propTypes = {
+  data: ingredientConstrucorPropType.isRequired,
+  index: PropTypes.number.isRequired
+}

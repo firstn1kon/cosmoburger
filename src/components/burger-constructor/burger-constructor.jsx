@@ -66,14 +66,11 @@ const BurgerConstructor = () => {
                 />
                 {helper && <DragHelper/>}
                 <ul className={styles.elements}>
-                    {saucesAndMains.map(({name, _uid, price, image_mobile}, i) => (
+                    {saucesAndMains.map((data, i) => (
                         <ConstructorIngredient
-                            key={_uid}
-                            _uid={_uid}
-                            text={name}
-                            index={i} 
-                            price={price} 
-                            thumbnail={image_mobile}
+                            key={data._uid}
+                            index={i}
+                            data={data} 
                         />
                     ))}
                 </ul>
