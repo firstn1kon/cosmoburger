@@ -1,6 +1,6 @@
 import { useEffect, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { ingredientsFetch, closeIngredientModal, dataViewingIngredient } from '../../services/slices/main-slice';
+import { ingredientsFetch, closeIngredientModal, dataViewingIngredient } from '../../services/slices/ingredients-slice';
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 
@@ -12,9 +12,9 @@ import Error from '../error/error';
 import Modal from '../modal/modal';
 import IngredientDetails from '../ingredient-details/ingredient-details';
 
-
 function App() {
-  const {isLoading, isError, isIngredientModalOpen} = useSelector(state => state.main)
+
+  const {isLoading, isError, isIngredientModalOpen} = useSelector(state => state.ingredients)
   const pickIngredient = useSelector(dataViewingIngredient)
   const dispatch = useDispatch();  
 
@@ -46,4 +46,3 @@ function App() {
 }
 
 export default App;
-

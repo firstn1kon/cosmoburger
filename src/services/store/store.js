@@ -1,9 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit';
-import main from "../slices/main-slice"
+import ingredients from "../slices/ingredients-slice"
 import order from "../slices/order-slice"
+import kit from "../slices/constructor-slice"
 
 const store = configureStore({
-    reducer: {main, order},
+    reducer: {ingredients, order, kit},
     middleware: getDefaultMiddleware => getDefaultMiddleware(),
     devTools: process.env.NODE_ENV !== "production",
 });

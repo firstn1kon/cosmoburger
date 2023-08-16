@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import { useCallback, useRef  } from 'react';
 import { useDrag, useDrop } from 'react-dnd';
 import { useDispatch } from 'react-redux';
-import { deleteFromConstructor, sortInConstrucor } from '../../../services/slices/main-slice';
+import { deleteFromConstructor, sortInConstrucor } from '../../../services/slices/constructor-slice';
 import { ingredientConstrucorPropType } from '../../../utils/prop-types';
 
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';

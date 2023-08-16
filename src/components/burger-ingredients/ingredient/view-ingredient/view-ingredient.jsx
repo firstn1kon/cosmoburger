@@ -2,7 +2,7 @@ import { ingredientPropType } from '../../../../utils/prop-types';
 import { useDrag } from "react-dnd";
 import { useSelector, useDispatch } from 'react-redux';
 import { createSelector } from "@reduxjs/toolkit";
-import { openIngredientModal, setViewIngredient } from '../../../../services/slices/main-slice';
+import { openIngredientModal, setViewIngredient } from '../../../../services/slices/ingredients-slice';
 
 
 import { Counter, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components'
@@ -14,8 +14,8 @@ const ViewIngredient = ({data}) => {
     const {image, price, name} = data;
 
     const countIngredient = createSelector(
-        (state) => state.main.constructor.saucesAndMains,
-        (state) => state.main.constructor.bun,
+        (state) => state.kit.saucesAndMains,
+        (state) => state.kit.bun,
         (ingredients, bun) => data.type === 'bun' && bun._id ===  data._id? 2 : ingredients.filter(item => item._id === data._id).length 
     )
 

@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef} from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { setCurrentTab } from '../../services/slices/main-slice';
+import { setCurrentTab } from '../../services/slices/ingredients-slice';
 
 import Ingredient from './ingredient/ingredient';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
@@ -9,8 +9,8 @@ import styles from './burger-ingredients.module.css'
 
 const BurgerIngredients = () => {
 
-    const data = useSelector(state => state.main.ingredients)
-    const tab = useSelector(state => state.main.currentTab)
+    const data = useSelector(state => state.ingredients.ingredients)
+    const tab = useSelector(state => state.ingredients.currentTab)
     const dispatch = useDispatch()
 
     const containerRef = useRef(null);

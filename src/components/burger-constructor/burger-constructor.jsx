@@ -1,7 +1,7 @@
 import { useCallback, useMemo } from 'react';
 import { useDrop } from "react-dnd";
 import { useSelector, useDispatch } from 'react-redux';
-import { addToConstructor, resetConstructor } from '../../services/slices/main-slice';
+import {  addToConstructor, resetConstructor } from '../../services/slices/constructor-slice';
 import { sendOrder, closeOrderModal, resetError } from '../../services/slices/order-slice';
 
 import ConstructorIngredient from './constructor-ingredient/constructor-ingredient';
@@ -26,7 +26,7 @@ const BurgerConstructor = () => {
         })
     });
 
-    const {saucesAndMains, bun, helper} = useSelector(state => state.main.constructor)
+    const {saucesAndMains, bun, helper} = useSelector(state => state.kit)
     const {isOrderModalOpen, isLoading, isError} = useSelector(state => state.order)
     const {number} = useSelector(state => state.order.data.order)
     const dispatch = useDispatch();

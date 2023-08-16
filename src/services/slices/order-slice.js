@@ -56,9 +56,6 @@ const {actions, reducer} = orderSlice;
 
 export default reducer;
 
-
-
-
 export const {
     openOrderModal,
     closeOrderModal,
