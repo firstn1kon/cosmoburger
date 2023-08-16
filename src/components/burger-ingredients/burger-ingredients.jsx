@@ -1,8 +1,10 @@
 import { useCallback, useEffect, useRef} from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { setCurrentTab } from '../../services/slices/ingredients-slice';
+import { setCurrentTab, dataViewingIngredient, closeIngredientModal } from '../../services/slices/ingredients-slice';
 
 import Ingredient from './ingredient/ingredient';
+import Modal from '../modal/modal';
+import IngredientDetails from '../ingredient-details/ingredient-details';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
 
 import styles from './burger-ingredients.module.css'
@@ -11,6 +13,8 @@ const BurgerIngredients = () => {
 
     const data = useSelector(state => state.ingredients.ingredients)
     const tab = useSelector(state => state.ingredients.currentTab)
+    const isIngredientModalOpen = useSelector(state => state.ingredients.isIngredientModalOpen)
+    const pickIngredient = useSelector(dataViewingIngredient)
     const dispatch = useDispatch()
 
     const containerRef = useRef(null);
@@ -51,6 +55,9 @@ const BurgerIngredients = () => {
             if(type.id === value) type.scrollIntoView({behavior: "smooth"}) 
         })
     }
+    const closeModal = useCallback(() =>  {
+        dispatch(closeIngredientModal())
+    },[dispatch])
 
     return (
         <section className={styles['burger-ingredients']}>
@@ -68,6 +75,8 @@ const BurgerIngredients = () => {
                     return null
                 })}
             </div>
+            {isIngredientModalOpen && pickIngredient 
+                && <Modal  title={'Детали ингредиента'} close={closeModal}><IngredientDetails data={pickIngredient}/></Modal>}
         </section>
     )
   }

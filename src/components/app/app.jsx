@@ -1,6 +1,6 @@
-import { useEffect, useCallback } from 'react';
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { ingredientsFetch, closeIngredientModal, dataViewingIngredient } from '../../services/slices/ingredients-slice';
+import { ingredientsFetch} from '../../services/slices/ingredients-slice';
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 
@@ -9,23 +9,16 @@ import BurgerIngredients from '../burger-ingredients/burger-ingredients';
 import BurgerConstructor from '../burger-constructor/burger-constructor';
 import Spinner from '../spinner/spinner';
 import Error from '../error/error';
-import Modal from '../modal/modal';
-import IngredientDetails from '../ingredient-details/ingredient-details';
 
 function App() {
 
-  const {isLoading, isError, isIngredientModalOpen} = useSelector(state => state.ingredients)
-  const pickIngredient = useSelector(dataViewingIngredient)
+  const { isLoading, isError } = useSelector(state => state.ingredients)
   const dispatch = useDispatch();  
 
   useEffect(()=> {
     dispatch(ingredientsFetch())
     // eslint-disable-next-line
   },[]);
-
-  const closeModal = useCallback(() =>  {
-    dispatch(closeIngredientModal())
-},[dispatch])
 
     return (
       <>
@@ -38,9 +31,7 @@ function App() {
             <BurgerConstructor/>
           </DndProvider>
         </main>
-        {isIngredientModalOpen && pickIngredient && 
-        <Modal  title={'Детали ингредиента'} close={closeModal}><IngredientDetails data={pickIngredient}/></Modal>
-        }
+
       </>
     )
 }
