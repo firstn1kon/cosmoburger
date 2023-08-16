@@ -24,6 +24,6 @@ export const getAllIngredients = async () => {
 };
 
 export const postOrder = async (order) => {
-    const res = await request(`${_apiBase}/orders`, 'POST', order);
+    const res = await request(`${_apiBase}/orderss`, 'POST', order);
     return res
 };

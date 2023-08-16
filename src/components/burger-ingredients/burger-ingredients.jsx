@@ -46,17 +46,19 @@ const BurgerIngredients = () => {
         // eslint-disable-next-line
     },[data]);
 
-    const moveToPosition = (index) => {
-        typesRef.current[index].scrollIntoView({behavior: "smooth"})
-        }
+    const moveToPosition = (value) => {
+        typesRef.current.forEach(type => {
+            if(type.id === value) type.scrollIntoView({behavior: "smooth"}) 
+        })
+    }
 
     return (
         <section className={styles['burger-ingredients']}>
             <h1 className='text text_type_main-large' >Соберите бургер</h1>
             <div className={styles.tab}>
-                <Tab value="bun" active={tab === 'bun'} onClick={() => moveToPosition(0)}>Булки</Tab>
-                <Tab value="sauce" active={tab === 'sauce'} onClick={() => moveToPosition(1)}>Соусы</Tab>
-                <Tab value="main" active={tab === 'main'} onClick={() => moveToPosition(2)}>Начинки</Tab>
+                <Tab value="bun" active={tab === 'bun'} onClick={moveToPosition}>Булки</Tab>
+                <Tab value="sauce" active={tab === 'sauce'} onClick={moveToPosition}>Соусы</Tab>
+                <Tab value="main" active={tab === 'main'} onClick={moveToPosition}>Начинки</Tab>
             </div>
             <div className={styles.scroll} ref={containerRef}>
                 {filterDataByType(data).map((ingredient, i )=> {
