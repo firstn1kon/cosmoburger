@@ -1,43 +1,83 @@
-import PropTypes from 'prop-types';
-import { ingredientPropType } from '../../utils/prop-types';
+import { useCallback, useMemo } from 'react';
+import { useDrop } from "react-dnd";
+import { useSelector, useDispatch } from 'react-redux';
+import {  addToConstructor, resetConstructor } from '../../services/slices/constructor-slice';
+import { sendOrder, closeOrderModal, resetError } from '../../services/slices/order-slice';
+import { getSaucesAndMains, getBun, getHelper, getIsOrderModalOpen, getIsLoadingOrder, getIsErrorOrder, getNumberOrder } from '../../services/slices/selectors';
 
-import useModal from '../../hooks/use-modal';
+import ConstructorIngredient from './constructor-ingredient/constructor-ingredient';
 import OrderDetails from '../order-details/order-details';
-import { ConstructorElement, Button, CurrencyIcon, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components'
+import DragHelper from './drag-helper/drag-helper';
+import { ConstructorElement, Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components'
+import Modal from '../modal/modal';
+import Error from '../error/error';
 
 import styles from './burger-constructor.module.css'
 
-const BurgerConstructor = ({data}) => {
+const BurgerConstructor = () => {
+
+    const[{transform, background}, dropTarget] = useDrop({
+        accept: 'ingredients',
+        drop(itemId) {
+            dispatch(addToConstructor(itemId.data))
+        },
+        collect: monitor => ({
+            transform: monitor.isOver() ? 'Scale(.95)' : null,
+            background: monitor.isOver() ? '#171719' : null
+        })
+    });
+
+    const saucesAndMains = useSelector(getSaucesAndMains)
+    const bun = useSelector(getBun)
+    const helper = useSelector(getHelper)
+    const isOrderModalOpen = useSelector(getIsOrderModalOpen)
+    const isLoading = useSelector(getIsLoadingOrder)
+    const isError = useSelector(getIsErrorOrder)
+    const numberOrder = useSelector(getNumberOrder)
+
+    const dispatch = useDispatch();
+
+    const total = useMemo(() =>
+    [...saucesAndMains,{...bun},{...bun}].reduce((acc,curr) => acc + (curr.price === undefined?  0 : curr.price), 0),
+    [saucesAndMains, bun]);
     
-    const {renderModal, openModal} = useModal({Component: <OrderDetails uid="034536"/>})
-  
-    const saucesAndMains = data.filter(item => item.type !== 'bun')
-    const bun = data.find(item => item.type === 'bun')
-    const total = [...saucesAndMains,{...bun},{...bun}].reduce((acc,curr) => acc + curr.price, 0);
+    const dnoneOrFadeIn = saucesAndMains && bun ? styles.fadeIn : styles.dnone
+    const statusButton = isLoading ? 'Оформляем ...' : 'Оформить заказ'
+
+    const fetchOrder = () => {
+        const ingredients = [...saucesAndMains, {...bun}].map(ingredient => ingredient._id)
+        const dataOrder = {ingredients}
+        dispatch(sendOrder(dataOrder))
+    }
+
+    const closeModal = useCallback(() =>  {
+        dispatch(closeOrderModal())
+        dispatch(resetConstructor())
+    },[dispatch])
+
+    const tryAgain = useCallback(() =>  {
+        dispatch(resetError())
+    },[dispatch])
 
     return (
-        <section className={styles['constructor-section']}>
-            <div className={styles['constructor-wrapper']}>
+        <section className={styles['constructor-section']} ref={dropTarget} style={{background}}>
+            <div className={styles['constructor-wrapper']} style={{transform}} >
                 <ConstructorElement
                     type="top"
                     isLocked={true}
                     text={`${bun?.name} (верх)`}
                     price={bun?.price}
                     thumbnail={bun?.image_mobile}
-                    extraClass={styles.top}
+                    extraClass={`${styles.top} ${dnoneOrFadeIn}`}
                 />
+                {helper && <DragHelper/>}
                 <ul className={styles.elements}>
-                    {saucesAndMains.map(({name, _id, price, image_mobile}) => (
-                        <li className={styles.item} key={_id}>
-                            <div className={styles.wrapper}>
-                                <DragIcon type="primary"/>
-                                <ConstructorElement 
-                                    text={name} 
-                                    price={price} 
-                                    thumbnail={image_mobile}
-                                />
-                            </div>
-                        </li>
+                    {saucesAndMains.map((data, i) => (
+                        <ConstructorIngredient
+                            key={data._uid}
+                            index={i}
+                            data={data} 
+                        />
                     ))}
                 </ul>
                 <ConstructorElement
@@ -46,7 +86,7 @@ const BurgerConstructor = ({data}) => {
                     text={`${bun?.name} (низ)`}
                     price={bun?.price}
                     thumbnail={bun?.image_mobile}
-                    extraClass={styles.top}
+                    extraClass={`${styles.top} ${dnoneOrFadeIn}`}
                 />
             </div>
             <div className={styles.result}>
@@ -54,14 +94,12 @@ const BurgerConstructor = ({data}) => {
                     <p className="text text_type_digits-medium mr-2">{total? total : 0}</p>
                     <CurrencyIcon type="primary" />
                 </div>
-                <Button htmlType="button" type="primary" size="large" onClick={openModal}>Оформить заказ</Button>
-                {renderModal}
+                <Button  disabled={helper} htmlType="button" type="primary" size="large" onClick={fetchOrder}>{statusButton}</Button>
             </div>
+            {isOrderModalOpen && numberOrder && <Modal close={closeModal}><OrderDetails uid={numberOrder}/></Modal>}
+            {isError && <Error err={isError} tryAgain={tryAgain}/>}
         </section>
     )
 }
 export default BurgerConstructor
 
-BurgerConstructor.propTypes = {
-    data: PropTypes.arrayOf(ingredientPropType).isRequired
-};

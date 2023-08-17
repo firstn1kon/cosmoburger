@@ -1,19 +1,12 @@
 import PropTypes from 'prop-types';
 import { ingredientPropType } from '../../../utils/prop-types';
-import { useEffect } from 'react';
+import { forwardRef } from 'react';
 
 import ViewIngredient from './view-ingredient/view-ingredient';
 
 import styles from '../burger-ingredients.module.css'
 
-const Ingredient = ({data, tab, type}) => {
-
-    useEffect(() => {
-        if (tab === type) {
-            const elementCoordinates = document.querySelector(`#${type}`)
-            elementCoordinates.scrollIntoView({behavior: "smooth"});
-        }
-    },[tab, type])
+const Ingredient = forwardRef(({data, type}, ref) => {
 
     let titleType;
 
@@ -31,18 +24,17 @@ const Ingredient = ({data, tab, type}) => {
     };
     return (
         <>
-            <h2 id={type} className={`${styles.title} text text_type_main-medium`}>{titleType}</h2>
+            <h2 id={type} data-scroll={type} ref={ref} className={`${styles.title} text text_type_main-medium`}>{titleType}</h2>
             <ul className={styles.wrapper}>
                 {data.map(ingredient => <ViewIngredient key={ingredient._id} data={ingredient}/>)}
             </ul>
         </>
     )
-}
+})
 
 export default Ingredient
 
 Ingredient.propTypes = {
     data: PropTypes.arrayOf(ingredientPropType).isRequired,
     type: PropTypes.oneOf(["bun", "main", "sauce"]).isRequired,
-    tab: PropTypes.oneOf(["bun", "main", "sauce"]).isRequired
 }

@@ -1,5 +1,9 @@
-import { useEffect, useState  } from 'react';
-import { getAllIngredients } from '../../utils/api';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { ingredientsFetch} from '../../services/slices/ingredients-slice';
+import { getIsLoadingIngredients, getIsErrorIngredients } from '../../services/slices/selectors';
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
 
 import AppHeader from '../app-header/app-header';
 import BurgerIngredients from '../burger-ingredients/burger-ingredients';
@@ -8,42 +12,30 @@ import Spinner from '../spinner/spinner';
 import Error from '../error/error';
 
 function App() {
-  
-  const [data, setData] = useState([]);
-  const [isLoading, setLoading] = useState(true);
-  const [isError, setError] = useState(false);
-  
+
+  const isLoading = useSelector(getIsLoadingIngredients)
+  const isError = useSelector(getIsErrorIngredients)
+  const dispatch = useDispatch();  
+
   useEffect(()=> {
-    loadIngredients();
+    dispatch(ingredientsFetch())
     // eslint-disable-next-line
   },[]);
 
-  const loadIngredients = () => {
-    setError(false);
-    getAllIngredients()
-    .then(data => {
-      setLoading(false)
-      setData(data)
-    })
-    .catch(e => {
-      setLoading(false)
-      setError(e.message);
-      console.log(e)
-    })
-  };
-
     return (
       <>
-        {isError && <Error err={isError}/>}
+        {isError && <Error err={isError} reload={true}/>}
         {isLoading && <Spinner/>}
         <AppHeader/>
         <main>
-          <BurgerIngredients data={data}/>
-          <BurgerConstructor data={data}/>
+          <DndProvider backend={HTML5Backend}>
+            <BurgerIngredients/>
+            <BurgerConstructor/>
+          </DndProvider>
         </main>
+
       </>
     )
 }
 
 export default App;
-
