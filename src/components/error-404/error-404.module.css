@@ -1,0 +1,48 @@
+.wrapper {
+    margin-top: 40px;
+    width: 100%;
+    height: 70vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 100px;
+}
+
+.info {
+    text-align: center;
+}
+
+.link {
+    color: #8585AD;
+    transition: 0.5s;
+}
+.link:hover{
+    color: #F2F2F3;
+}
+
+.astronaut {
+    animation: tranform 8s infinite ease-in-out;
+}
+
+@keyframes tranform {
+    0% {
+        transform: translateY(0px);
+    }
+    25%{
+        transform: translateY(-10px) rotate(5deg);
+    }
+    50% {
+        transform: translateY(-20px) rotate(-5deg);
+ 
+    }
+    75% {
+        transform: translateY(-10px) rotate(10deg);
+
+    }
+    100% {
+        transform: translateY(0px) rotate(0deg);
+
+    }
+    
+}

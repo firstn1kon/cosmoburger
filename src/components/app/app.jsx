@@ -1,41 +1,58 @@
-import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { ingredientsFetch} from '../../services/slices/ingredients-slice';
-import { getIsLoadingIngredients, getIsErrorIngredients } from '../../services/slices/selectors';
-import { DndProvider } from "react-dnd";
-import { HTML5Backend } from "react-dnd-html5-backend";
+import {Routes, Route, useLocation, useNavigate}from "react-router-dom";
+import { MainPage, NotFoundPage, LoginPage, RegisterPage, ForgotPasswordPage, ResetPasswordPage, ProfilePage, ProfileOrdersPage } from "../../pages";
+import { OnlyAuth, OnlyUnAuth } from "../protected-route-element/proteced-route-element";
+
+import { useDispatch } from "react-redux";
+import { fetchUser } from "../../services/slices/user-slice";
+import { useEffect, useCallback } from "react";
+import { ingredientsFetch } from "../../services/slices/ingredients-slice";
 
 import AppHeader from '../app-header/app-header';
-import BurgerIngredients from '../burger-ingredients/burger-ingredients';
-import BurgerConstructor from '../burger-constructor/burger-constructor';
-import Spinner from '../spinner/spinner';
-import Error from '../error/error';
+import Modal from "../modal/modal";
+import IngredientDetails from "../ingredient-details/ingredient-details";
 
 function App() {
 
-  const isLoading = useSelector(getIsLoadingIngredients)
-  const isError = useSelector(getIsErrorIngredients)
-  const dispatch = useDispatch();  
+    const dispatch = useDispatch();
+    const location = useLocation();
+    const background = location.state && location.state.modal;
+    const navigate = useNavigate()
 
-  useEffect(()=> {
-    dispatch(ingredientsFetch())
-    // eslint-disable-next-line
-  },[]);
+    const closeModal = useCallback(() =>  {
+      navigate(-1)
+    },[navigate])
 
-    return (
-      <>
-        {isError && <Error err={isError} reload={true}/>}
-        {isLoading && <Spinner/>}
-        <AppHeader/>
-        <main>
-          <DndProvider backend={HTML5Backend}>
-            <BurgerIngredients/>
-            <BurgerConstructor/>
-          </DndProvider>
-        </main>
+    useEffect(()=> {
+      dispatch(fetchUser())
+      dispatch(ingredientsFetch())
+      // eslint-disable-next-line
+    },[])
 
-      </>
-    )
-}
+      return (
+        <>
+          <AppHeader/>
+          <main>
+            <Routes location={background || location}>
+              <Route/>
+              <Route path="/" element={<MainPage/>}/>
+              <Route path="*" element={<NotFoundPage/>}/>
+              <Route path="/login" element={<OnlyUnAuth component={<LoginPage/>}/>}/>
+              <Route path="/register" element={<OnlyUnAuth component={<RegisterPage/>}/>}/> 
+              <Route path="/forgot-password" element={<OnlyUnAuth component={<ForgotPasswordPage/>}/>}/> 
+              <Route path="/reset-password" element={<OnlyUnAuth component={<ResetPasswordPage/>}/>}/>
+              <Route path="/profile" element={<OnlyAuth component={<ProfilePage/>}/>}/> 
+              <Route path="profile/orders" element={<OnlyAuth component={<ProfileOrdersPage/>}/>}/>
+              <Route path="ingredients/:ingredientId" element={<IngredientDetails/>}/>
+            </Routes>
+            {background && (
+              <Routes>
+                <Route path="/ingredients/:ingredientId" 
+                  element={<Modal  title={'Детали ингредиента'} close={closeModal}><IngredientDetails/></Modal>}/>
+              </Routes>
+            )}
+          </main>
+        </>
+      )
+    }
 
 export default App;

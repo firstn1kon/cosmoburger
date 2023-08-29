@@ -1,0 +1,49 @@
+.container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 46px;
+}
+
+.wrapper {
+    display: flex;
+    margin-top: 120px;
+    gap: 60px;
+    justify-content: flex-start;
+} 
+.menu {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}  
+
+.link {
+    text-decoration: none;
+    color: #8585AD;
+    transition: .5s all;
+    
+}
+
+.link:hover {
+    color: #F2F2F3
+}
+.active {
+    color: #F2F2F3
+}
+
+.info {
+    color: #8585AD
+}
+
+.nav {
+    width: 320px;
+}
+
+.buttons {
+    display: flex;
+    gap: 60px;
+    justify-content: space-around;
+}
+
+.button {
+    width: 50%;
+}

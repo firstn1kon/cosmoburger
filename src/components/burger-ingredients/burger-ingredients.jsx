@@ -1,11 +1,9 @@
 import { useCallback, useEffect, useRef} from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { setCurrentTab, closeIngredientModal } from '../../services/slices/ingredients-slice';
-import { getIngredients, getCurrentTab, getIsIngredientModalOpen, getModalIngredient } from '../../services/slices/selectors';
+import { setCurrentTab } from '../../services/slices/ingredients-slice';
+import { getIngredients, getCurrentTab } from '../../services/slices/selectors';
 
 import Ingredient from './ingredient/ingredient';
-import Modal from '../modal/modal';
-import IngredientDetails from '../ingredient-details/ingredient-details';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
 
 import styles from './burger-ingredients.module.css'
@@ -14,10 +12,7 @@ const BurgerIngredients = () => {
 
     const data = useSelector(getIngredients)
     const tab = useSelector(getCurrentTab)
-    const isIngredientModalOpen = useSelector(getIsIngredientModalOpen)
-    const modalIngredient = useSelector(getModalIngredient)
     const dispatch = useDispatch()
-
     const containerRef = useRef(null);
     const typesRef = useRef([]);
 
@@ -38,7 +33,7 @@ const BurgerIngredients = () => {
         const types = typesRef.current
         if (types) types.forEach((type) => observer.observe(type));
         return () => {
-            types.forEach((type) => observer.unobserve(type))
+            if (types) types.forEach(() => observer.disconnect())
             observer.disconnect()
         }
     })
@@ -56,9 +51,6 @@ const BurgerIngredients = () => {
             if(type.id === value) type.scrollIntoView({behavior: "smooth"}) 
         })
     }
-    const closeModal = useCallback(() =>  {
-        dispatch(closeIngredientModal())
-    },[dispatch])
 
     return (
         <section className={styles['burger-ingredients']}>
@@ -76,8 +68,6 @@ const BurgerIngredients = () => {
                     return null
                 })}
             </div>
-            {isIngredientModalOpen && modalIngredient 
-                && <Modal  title={'Детали ингредиента'} close={closeModal}><IngredientDetails data={modalIngredient}/></Modal>}
         </section>
     )
   }

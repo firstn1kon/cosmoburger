@@ -1,22 +1,37 @@
+import { NavLink, useLocation } from 'react-router-dom'
+import { useSelector } from 'react-redux'
+import { getUserName } from '../../services/slices/selectors'
+import { regexProfileUrl } from '../../utils/utils'
 import { Logo, BurgerIcon, ListIcon, ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 
 import styles from './app-header.module.css'
 
 const AppHeader = () => {
 
+  const {pathname} = useLocation();
+  const user = useSelector(getUserName)
+
+  const showUserName = user ? user : 'Личный кабинет'
+
     return (
         <header className={styles.header}>
           <nav className={`${styles.nav} p-4`}>
             <ul className={`${styles.menu} text text_type_main-default`}>
               <li>
-                <a href='/' className={styles.link}><BurgerIcon type="primary"/> <span className={`${styles.active} ml-2`}>Конструктор</span></a>
+                <NavLink to='/'  className={({ isActive }) => isActive ? `${styles.link} ${styles.active}` : styles.link}>
+                  <BurgerIcon type={pathname === '/' ? 'primary' : 'secondary'}/> <span className="ml-2 text text_type_main-default">Конструктор</span>
+                </NavLink>
               </li>
               <li>
-                <a href='/' className={styles.link}><ListIcon type="secondary" /><span className='ml-2'>Лента заказов</span></a>
+                <NavLink to='/feed'  className={({ isActive }) => isActive ? `${styles.link} ${styles.active}` : styles.link}>
+                  <ListIcon type={pathname === '/feed' ? 'primary' : 'secondary'} /><span className='ml-2 text text_type_main-default'>Лента заказов</span>
+                </NavLink>
               </li>
             </ul>
-            <a href="/" className={styles.logo}><Logo/></a>
-            <a href="/" className={styles.link}><ProfileIcon type="secondary" /><span className='ml-2  text text_type_main-default'>Личный кабинет</span></a>
+            <div className={styles.logo}><Logo/></div>
+            <NavLink to="/profile" className={({ isActive }) => isActive ? `${styles.link} ${styles.active}` : styles.link}>
+              <ProfileIcon type={regexProfileUrl.test(pathname) ? 'primary' : 'secondary'} /><span className='ml-2  text text_type_main-default'>{showUserName}</span>
+            </NavLink>
           </nav>
         </header>
     )

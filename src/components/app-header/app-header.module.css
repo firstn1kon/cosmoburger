@@ -64,7 +64,7 @@
     transform: translateX(-50%);
 }
 
-.active {
+.active span {
     color: #F2F2F3;
 }
 

@@ -1,10 +1,9 @@
 import { ingredientPropType } from '../../../../utils/prop-types';
 import { useDrag } from "react-dnd";
-import { useSelector, useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import { createSelector } from "@reduxjs/toolkit";
-import { openIngredientModal, setViewIngredient } from '../../../../services/slices/ingredients-slice';
 import { getBun, getSaucesAndMains } from '../../../../services/slices/selectors';
-
 
 import { Counter, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 
@@ -21,7 +20,7 @@ const ViewIngredient = ({data}) => {
     )
 
     const count = useSelector(countIngredient)
-    const dispatch = useDispatch()
+    const navigate = useNavigate()
 
     const[{opacity}, dragRef] = useDrag({
         type: 'ingredients',
@@ -32,8 +31,7 @@ const ViewIngredient = ({data}) => {
     });
 
     const openModal = () => {
-        dispatch(openIngredientModal())
-        dispatch(setViewIngredient(data._id))
+        navigate(`/ingredients/${data._id}`, { state: { modal: true, id:  data._id}})
     }
 
     return (
