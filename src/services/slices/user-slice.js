@@ -1,6 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { postRegisterUser, postLoginUser, postFogotPassword, postResetPassword, getUser, patchUser, postLogoutUser } from "../../utils/api";
-import { checkRefreshOrAccessTokens } from "../../utils/utils";
 
 const initialState = {
     user: {
@@ -126,54 +125,35 @@ export const {
 // AsyncThunks
 export const registerUser = createAsyncThunk(
     'user/register',
-    async (user) => {
-        return await postRegisterUser(user)
-    }
+    postRegisterUser
 )
 
 export const loginUser = createAsyncThunk(
     'user/login',
-    async (user) => {
-        return await postLoginUser(user)
-    }
+    postLoginUser
 )
 
 export const fogotPassword = createAsyncThunk(
     'user/forgot-password',
-    async (email) => {
-        return await postFogotPassword(email)
-    }
+    postFogotPassword
 )
 
 export const resetPassword = createAsyncThunk(
     'user/reset-password',
-    async (data) => {
-        return await postResetPassword(data)
-    }
+    postResetPassword
 )
 
 export const fetchUser = createAsyncThunk(
     'user/get-user',
-    async (thunkAPI) => {
-        if(checkRefreshOrAccessTokens()) {
-            return await getUser()
-        }
-        else {
-            thunkAPI.dispatch(checkAuth())
-        }
-    }
+    getUser
 )
 
 export const updateUser = createAsyncThunk(
     'user/update-user',
-    async (user) => {
-        return await patchUser(user)
-    }
+    patchUser
 )
 
 export const logoutUser = createAsyncThunk(
     'user/logout-user',
-    async () => {
-        return await postLogoutUser()
-    }
+    postLogoutUser
 )

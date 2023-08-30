@@ -12,13 +12,11 @@ import Spinner from "../spinner/spinner"
 import styles from "./login.module.css"
 
 const Login = () => {
-    
-    const [value, setValue] = useState({
-        email: '',
-        password: '',
-    })
 
-    const {onChange, errors, disabled} = useValidate({setValue, values: ['email', 'password']})
+    const {onChange, errors, disabled, value} = useValidate({
+        inputValues: {email: "", password: ""},
+        values: ['email', 'password']
+    })
     const dispatch = useDispatch();
     const isLoading = useSelector(getIsLoadingUser)
     const isError = useSelector(getIsErrorUser)

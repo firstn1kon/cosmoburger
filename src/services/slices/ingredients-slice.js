@@ -39,7 +39,5 @@ export const {
 // AsyncThunks
 export const ingredientsFetch = createAsyncThunk(
     'ingredients/ingredientsFetch',
-    async () => {
-        return await getAllIngredients()
-    }
+    getAllIngredients
 )

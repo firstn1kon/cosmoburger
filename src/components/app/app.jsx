@@ -3,9 +3,10 @@ import { MainPage, NotFoundPage, LoginPage, RegisterPage, ForgotPasswordPage, Re
 import { OnlyAuth, OnlyUnAuth } from "../protected-route-element/proteced-route-element";
 
 import { useDispatch } from "react-redux";
-import { fetchUser } from "../../services/slices/user-slice";
+import { fetchUser,  checkAuth} from "../../services/slices/user-slice";
 import { useEffect, useCallback } from "react";
 import { ingredientsFetch } from "../../services/slices/ingredients-slice";
+import { checkRefreshOrAccessTokens } from "../../utils/utils";
 
 import AppHeader from '../app-header/app-header';
 import Modal from "../modal/modal";
@@ -23,7 +24,12 @@ function App() {
     },[navigate])
 
     useEffect(()=> {
-      dispatch(fetchUser())
+      if(checkRefreshOrAccessTokens()) {
+          dispatch(fetchUser())
+      }
+      else {
+          dispatch(checkAuth())
+      }
       dispatch(ingredientsFetch())
       // eslint-disable-next-line
     },[])

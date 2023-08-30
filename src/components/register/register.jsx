@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { registerUser, resetError } from '../../services/slices/user-slice'
 import { useDispatch, useSelector } from 'react-redux'
@@ -13,13 +13,10 @@ import styles from './register.module.css'
 
 const Register = () => {
 
-    const [value, setValue] = useState({
-        name: '',
-        email: '',
-        password: ''
+    const {onChange, errors, disabled, value} = useValidate({
+        inputValues: {name: '', email: '', password: ''}, 
+        values: ['email', 'password', 'name']
     })
-
-    const {onChange, errors, disabled} = useValidate({setValue, values: ['email', 'password', 'name']})
 
     const dispatch = useDispatch();
     const isLoading = useSelector(getIsLoadingUser)

@@ -25,6 +25,7 @@ const constructorSlice = createSlice({
         deleteFromConstructor: (state, action) => {
             const index = state.saucesAndMains.findIndex(item => item._uid === action.payload)
             if (index !== -1) state.saucesAndMains.splice(index, 1)
+            if(!state.saucesAndMains.length && !state.bun) state.helper = true
         },
         sortInConstrucor: (state, action) => {
             let temp = state.saucesAndMains[action.payload.hoverIndex]

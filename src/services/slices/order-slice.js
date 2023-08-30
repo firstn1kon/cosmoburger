@@ -57,7 +57,5 @@ export const {
 // AsyncThunks
 export const sendOrder = createAsyncThunk(
     'order/sendOrder',
-    async (order) => {
-        return await postOrder(order)
-    }
+    postOrder
 )

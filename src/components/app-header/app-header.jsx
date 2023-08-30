@@ -1,4 +1,4 @@
-import { NavLink, useLocation } from 'react-router-dom'
+import { NavLink, useLocation, Link } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { getUserName } from '../../services/slices/selectors'
 import { regexProfileUrl } from '../../utils/utils'
@@ -28,7 +28,7 @@ const AppHeader = () => {
                 </NavLink>
               </li>
             </ul>
-            <div className={styles.logo}><Logo/></div>
+            <Link to='/' ><div className={styles.logo}><Logo/></div></Link>
             <NavLink to="/profile" className={({ isActive }) => isActive ? `${styles.link} ${styles.active}` : styles.link}>
               <ProfileIcon type={regexProfileUrl.test(pathname) ? 'primary' : 'secondary'} /><span className='ml-2  text text_type_main-default'>{showUserName}</span>
             </NavLink>

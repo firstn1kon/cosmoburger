@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react"
+import { useCallback, useEffect } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
 import { getIsLoadingUser, getIsErrorUser } from '../../services/slices/selectors'
@@ -12,13 +12,8 @@ import { EmailInput, Button } from "@ya.praktikum/react-developer-burger-ui-comp
 import styles from "./forgot-password.module.css"
 
 const ForgotPassword = () => {
-    
-    const [value, setValue] = useState({
-        email: ''
-    })
 
-    const {onChange, errors, disabled} = useValidate({setValue, values: ['email']})
-
+    const {onChange, errors, disabled, value} = useValidate({inputValues: {email: ''} , values: ['email']})
     const dispatch = useDispatch();
     const navigate = useNavigate()
     const isLoading = useSelector(getIsLoadingUser)
@@ -32,6 +27,13 @@ const ForgotPassword = () => {
     const tryAgain = useCallback(() =>  {
         dispatch(resetError())
     },[dispatch])
+
+    useEffect(()=> {
+        return () => {
+            dispatch(resetError())
+        }
+    // eslint-disable-next-line
+    },[])
 
     const statusButton = isLoading ? <Spinner modal={false} loadText='Высылаем код'/> : 'Восстановить'
 

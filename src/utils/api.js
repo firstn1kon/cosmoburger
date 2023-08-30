@@ -65,7 +65,7 @@ export const getAllIngredients = async () => {
 
 export const postOrder = async (order) => {
     const json = JSON.stringify(order)
-    const res = await request(`${_apiBase}/orders`, 'POST', json);
+    const res = await requestWithRefresh(`${_apiBase}/orders`, 'POST', json);
     return res
 };
 

@@ -9,14 +9,12 @@ import { EmailInput, Input, PasswordInput, Button } from "@ya.praktikum/react-de
 import styles from "../profile.module.css"
 
 const EditForm = () => {
-
     const dispatch = useDispatch();
     const {name, email} = useSelector(getUserData);
-    const [value, setValue] = useState({})
     const [isVisible, setIsVisible] = useState(false)
     const [isDisabled, setIsDisabled] = useState(true)
     const nameRef = useRef(null);
-    const {onChange, errors, reset} = useValidate({setValue, values: ['email', 'name']})
+    const {onChange, errors, reset, setValue, value} = useValidate({values: ['email', 'name']})
 
     const handleChange = e => {
         onChange(e)
@@ -49,7 +47,7 @@ const EditForm = () => {
 
     useEffect(()=> {
         setValue({name, email})
-    },[name, email])
+    },[name, email, setValue])
 
     const disabled = errors.name.error || errors.email.error || errors.password.error
 

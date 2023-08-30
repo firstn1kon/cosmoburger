@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux"
-import { useState, useCallback } from 'react'
+import { useCallback, useEffect } from 'react'
 import { Link, Navigate, useLocation, useNavigate } from 'react-router-dom'
 import { resetPassword, resetError } from "../../services/slices/user-slice"
 import { getIsLoadingUser, getIsErrorUser, getTransfer } from '../../services/slices/selectors'
@@ -13,12 +13,10 @@ import styles from "./reset-password.module.css"
 
 const ResetPassword = () => {
 
-    const [value, setValue] = useState({
-        password: '',
-        token: ''
+    const {onChange, errors, disabled, value} = useValidate({
+        inputValues: {password: "", token: ""},
+        values: ['password', 'token']
     })
-
-    const {onChange, errors, disabled} = useValidate({setValue, values: ['password', 'token']})
 
     const location = useLocation();
     const navigate = useNavigate()
@@ -31,6 +29,13 @@ const ResetPassword = () => {
     const tryAgain = useCallback(() =>  {
         dispatch(resetError())
     },[dispatch])
+
+    useEffect(()=> {
+        return () => {
+            dispatch(resetError())
+        }
+    // eslint-disable-next-line
+    },[])
 
     const onSubmit = (e) => {
         e.preventDefault();

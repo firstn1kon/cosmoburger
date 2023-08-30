@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { regexEmail } from "../utils/utils";
 
-const useValidate = ({setValue, values}) => {
+const useValidate = ({inputValues={},values}) => {
 
+    const [value, setValue] = useState(inputValues);
     const [errors, setErrors] = useState({
         email: {
             error: false,
@@ -74,7 +75,7 @@ const useValidate = ({setValue, values}) => {
 
     const disabled = !Object.values(filterByKeys()).every(error => error.disabled === false)
 
-    return {errors, onChange, disabled, reset}
+    return {errors, onChange, disabled, reset, value, setValue}
 
 }
 
