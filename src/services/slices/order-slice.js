@@ -14,14 +14,6 @@ const initialState = {
     isError: false,
 }
 
-export const sendOrder = createAsyncThunk(
-    'order/sendOrder',
-    async (order) => {
-        const json = JSON.stringify(order)
-        return await postOrder(json)
-    }
-)
-
 const orderSlice = createSlice({
     name: 'order',
     initialState,
@@ -61,3 +53,9 @@ export const {
     closeOrderModal,
     resetError
 } = actions;
+
+// AsyncThunks
+export const sendOrder = createAsyncThunk(
+    'order/sendOrder',
+    postOrder
+)

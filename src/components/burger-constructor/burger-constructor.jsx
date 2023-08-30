@@ -1,16 +1,18 @@
 import { useCallback, useMemo } from 'react';
 import { useDrop } from "react-dnd";
+import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import {  addToConstructor, resetConstructor } from '../../services/slices/constructor-slice';
 import { sendOrder, closeOrderModal, resetError } from '../../services/slices/order-slice';
-import { getSaucesAndMains, getBun, getHelper, getIsOrderModalOpen, getIsLoadingOrder, getIsErrorOrder, getNumberOrder } from '../../services/slices/selectors';
-
+import { getSaucesAndMains, getBun, getHelper, getIsOrderModalOpen, 
+         getIsLoadingOrder, getIsErrorOrder, getNumberOrder, getUserName } from '../../services/slices/selectors';
 import ConstructorIngredient from './constructor-ingredient/constructor-ingredient';
 import OrderDetails from '../order-details/order-details';
 import DragHelper from './drag-helper/drag-helper';
 import { ConstructorElement, Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import Modal from '../modal/modal';
 import Error from '../error/error';
+import Spinner from '../spinner/spinner';
 
 import styles from './burger-constructor.module.css'
 
@@ -34,7 +36,9 @@ const BurgerConstructor = () => {
     const isLoading = useSelector(getIsLoadingOrder)
     const isError = useSelector(getIsErrorOrder)
     const numberOrder = useSelector(getNumberOrder)
+    const user = useSelector(getUserName)
 
+    const navigate = useNavigate()
     const dispatch = useDispatch();
 
     const total = useMemo(() =>
@@ -42,9 +46,10 @@ const BurgerConstructor = () => {
     [saucesAndMains, bun]);
     
     const dnoneOrFadeIn = saucesAndMains && bun ? styles.fadeIn : styles.dnone
-    const statusButton = isLoading ? 'Оформляем ...' : 'Оформить заказ'
+    const statusButton = isLoading ? <Spinner modal={false} loadText='Оформляем'/> : 'Оформить заказ'
 
     const fetchOrder = () => {
+        if(!user) return navigate('/login')
         const ingredients = [...saucesAndMains, {...bun}].map(ingredient => ingredient._id)
         const dataOrder = {ingredients}
         dispatch(sendOrder(dataOrder))
@@ -94,7 +99,7 @@ const BurgerConstructor = () => {
                     <p className="text text_type_digits-medium mr-2">{total? total : 0}</p>
                     <CurrencyIcon type="primary" />
                 </div>
-                <Button  disabled={helper} htmlType="button" type="primary" size="large" onClick={fetchOrder}>{statusButton}</Button>
+                <Button  disabled={helper || isLoading} htmlType="button" type="primary" size="large" onClick={fetchOrder}>{statusButton}</Button>
             </div>
             {isOrderModalOpen && numberOrder && <Modal close={closeModal}><OrderDetails uid={numberOrder}/></Modal>}
             {isError && <Error err={isError} tryAgain={tryAgain}/>}

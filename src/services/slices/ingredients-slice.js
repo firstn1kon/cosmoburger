@@ -5,30 +5,14 @@ const initialState = {
     ingredients: [],
     isLoading: false,
     isError: false,
-    viewIngredient: null,
-    isIngredientModalOpen: false,
     currentTab: "bun"
 }
-
-export const ingredientsFetch = createAsyncThunk(
-    'ingredients/ingredientsFetch',
-    async () => {
-        return await getAllIngredients()
-    }
-)
 
 const mainSlice = createSlice({
     name: 'ingredients',
     initialState,
     reducers: {
-        openIngredientModal: state => {state.isIngredientModalOpen = true;},
-        closeIngredientModal: state => {
-            state.isIngredientModalOpen = false
-            state.viewIngredient = null
-        },
-        setViewIngredient: (state, action) => {state.viewIngredient = action.payload},
         setCurrentTab: (state, action) => {state.currentTab = action.payload}
-
     },
     extraReducers: builder =>
         builder
@@ -49,8 +33,11 @@ const {actions, reducer} = mainSlice;
 export default reducer;
 
 export const {
-    openIngredientModal,
-    closeIngredientModal,
-    setViewIngredient,
     setCurrentTab
 } = actions;
+
+// AsyncThunks
+export const ingredientsFetch = createAsyncThunk(
+    'ingredients/ingredientsFetch',
+    getAllIngredients
+)
