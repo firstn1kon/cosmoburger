@@ -1,20 +1,18 @@
 import {Routes, Route, useLocation, useNavigate}from "react-router-dom";
 import { MainPage, NotFoundPage, LoginPage, RegisterPage, ForgotPasswordPage, ResetPasswordPage, ProfilePage, ProfileOrdersPage } from "../../pages";
 import { OnlyAuth, OnlyUnAuth } from "../protected-route-element/proteced-route-element";
-
-import { useDispatch } from "react-redux";
+import { useAppDispatch } from "../../hooks/store-hooks";
 import { fetchUser,  checkAuth} from "../../services/slices/user-slice";
 import { useEffect, useCallback } from "react";
 import { ingredientsFetch } from "../../services/slices/ingredients-slice";
 import { checkRefreshOrAccessTokens } from "../../utils/utils";
-
 import AppHeader from '../app-header/app-header';
 import Modal from "../modal/modal";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 
 function App() {
 
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const location = useLocation();
     const background = location.state && location.state.modal;
     const navigate = useNavigate()

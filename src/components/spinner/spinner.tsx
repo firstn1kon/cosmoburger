@@ -1,10 +1,14 @@
-import PropTypes from 'prop-types';
 
 import logo from '../../images/spinner.svg'
-
+import { FC } from 'react'
 import styles from './spinner.module.css'
 
-const Spinner = ({modal = true, loadText = "Loading"}) => {
+interface ISpinner {
+    modal?: boolean,
+    loadText?: string
+}
+
+const Spinner: FC<ISpinner> = ({modal = true, loadText = "Loading"}) => {
 
     const content = modal ? 
         <div className={styles.overlay}>
@@ -21,8 +25,3 @@ const Spinner = ({modal = true, loadText = "Loading"}) => {
 }
 
 export default Spinner
-
-Spinner.propTypes = {
-    modal: PropTypes.bool,
-    loadText: PropTypes.string,
-}

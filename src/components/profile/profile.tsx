@@ -1,8 +1,12 @@
-import PropTypes from 'prop-types';
 import Nav from "./nav/nav"
+import { FC } from "react"
 import styles from "./profile.module.css"
 
-const Profile =  ({children}) => {
+interface IProfile {
+    children: React.ReactNode
+}
+
+const Profile: FC<IProfile> = ({children}) => {
     return (
         <div className={styles.container}>
             <div className={styles.wrapper}>
@@ -16,10 +20,3 @@ const Profile =  ({children}) => {
 
 export default Profile
 
-Profile.propTypes = {
-    children: PropTypes.oneOfType([
-        PropTypes.object,
-        PropTypes.node
-    ]).isRequired,
-
-}

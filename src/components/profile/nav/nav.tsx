@@ -1,16 +1,17 @@
 import { NavLink } from 'react-router-dom'
 import { logoutUser } from '../../../services/slices/user-slice'
+import { useAppDispatch } from '../../../hooks/store-hooks'
+import { MouseEvent } from 'react'
 import styles from '../profile.module.css'
-import { useDispatch } from 'react-redux'
 
 const Nav = () => {
 
-    const dispatch = useDispatch();
-
-    const logout = (e) => {
+    const dispatch = useAppDispatch();
+    const logout = (e: MouseEvent<HTMLAnchorElement>) => {
         e.preventDefault()
         dispatch(logoutUser())
     }
+
     return (
         <nav className={styles.nav}>
             <ul className={styles.menu}>

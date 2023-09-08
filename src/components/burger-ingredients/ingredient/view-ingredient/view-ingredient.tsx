@@ -1,22 +1,27 @@
-import { ingredientPropType } from '../../../../utils/prop-types';
 import { useDrag } from "react-dnd";
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { createSelector } from "@reduxjs/toolkit";
 import { getBun, getSaucesAndMains } from '../../../../services/slices/selectors';
-
 import { Counter, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components'
-
+import { IBasicIngredient } from '../../../../utils/types';
+import { FC } from 'react';
 import styles from '../../burger-ingredients.module.css'
 
-const ViewIngredient = ({data}) => {
+interface ICurrentIngredient {
+    data: IBasicIngredient
+}
+
+const ViewIngredient: FC<ICurrentIngredient> = ({data}) => {
 
     const {image, price, name} = data;
 
     const countIngredient = createSelector(
         getSaucesAndMains,
         getBun,
-        (ingredients, bun) => data.type === 'bun' && bun._id ===  data._id? 2 : ingredients.filter(item => item._id === data._id).length 
+        (ingredients: IBasicIngredient[], bun: IBasicIngredient) => data.type === 'bun' && bun._id ===  data._id 
+            ? 2 
+            : ingredients.filter(item => item._id === data._id).length 
     )
 
     const count = useSelector(countIngredient)
@@ -47,7 +52,3 @@ const ViewIngredient = ({data}) => {
 }
 
 export default ViewIngredient
-
-ViewIngredient.propTypes = {
-    data: ingredientPropType.isRequired
-}

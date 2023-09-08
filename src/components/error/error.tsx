@@ -1,15 +1,18 @@
 import { createPortal } from 'react-dom'
-import { useEffect } from 'react';
-
-import PropTypes from 'prop-types';
-
+import { useEffect,  FC  } from 'react';
+import errorImg from '../../images/error.svg'
 import styles from './error.module.css'
 
-import errorImg from '../../images/error.svg'
+const outter = document.createElement('div') as HTMLDivElement
 
-const outter = document.createElement('div');
+interface IError {
+    err: string,
+    reload?: boolean,
+    tryAgain?: () => void,
+    inline?: boolean
+}
 
-const Error = ({err, reload, tryAgain, inline = false}) => {
+const Error: FC<IError> = ({err, reload, tryAgain, inline = false}) => {
 
     useEffect(()=> {
         if(!inline) {
@@ -25,12 +28,12 @@ const Error = ({err, reload, tryAgain, inline = false}) => {
     },[]);
 
     const content = reload 
-        ? <a href='/' alt="reload" className={styles.link}>RELOAD</a> 
+        ? <a href='/' className={styles.link}>RELOAD</a> 
         : <div className={styles.link} onClick={tryAgain}>ЗАКРЫТЬ</div>
 
     const render = inline 
         ? <div className={`${styles.error} fadeIn`}>{err}</div>
-        :      createPortal(         
+        : createPortal(         
             <div className={styles.overlay}>
                 <div className={styles.wrapper}>
                     <img src={errorImg} alt="Error"/>
@@ -38,7 +41,7 @@ const Error = ({err, reload, tryAgain, inline = false}) => {
                     {content}
                 </div>
             </div>
-                    ,outter)
+        ,outter)
                     
 
     return (
@@ -48,9 +51,3 @@ const Error = ({err, reload, tryAgain, inline = false}) => {
 
 export default Error
 
-Error.propTypes = {
-    err: PropTypes.string.isRequired,
-    reload: PropTypes.bool,
-    tryAgain: PropTypes.func,
-    inline: PropTypes.bool
-}

@@ -1,26 +1,25 @@
 import { useCallback, useEffect, useRef} from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useAppDispatch, useAppSelector } from '../../hooks/store-hooks';
 import { setCurrentTab } from '../../services/slices/ingredients-slice';
 import { getIngredients, getCurrentTab } from '../../services/slices/selectors';
-
-import Ingredient from './ingredient/ingredient';
+import { IBasicIngredient, TypesMenu } from '../../utils/types';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
-
+import Ingredient from './ingredient/ingredient';
 import styles from './burger-ingredients.module.css'
 
 const BurgerIngredients = () => {
 
-    const data = useSelector(getIngredients)
-    const tab = useSelector(getCurrentTab)
-    const dispatch = useDispatch()
-    const containerRef = useRef(null);
-    const typesRef = useRef([]);
+    const data = useAppSelector(getIngredients)
+    const tab = useAppSelector(getCurrentTab)
+    const dispatch = useAppDispatch()
+    const containerRef = useRef<HTMLDivElement>(null);
+    const typesRef = useRef<HTMLHeadingElement[]>([]);
 
     useEffect(()=> {
-        const callback = (entries) => {
+        const callback = (entries: IntersectionObserverEntry[]) => {
             entries.forEach((entry) => {
                 if (entry.isIntersecting) {
-                    dispatch(setCurrentTab((entry.target.dataset.scroll)));
+                    dispatch(setCurrentTab((entry.target.id)));
                 }
               });
         }
@@ -38,7 +37,7 @@ const BurgerIngredients = () => {
         }
     })
 
-    const filterDataByType = useCallback((data) => {
+    const filterDataByType = useCallback((data: IBasicIngredient[]) : IBasicIngredient[][]  => {
         const buns = data.filter(buns => buns.type === 'bun');
         const main = data.filter(main => main.type === 'main');
         const sauces = data.filter(sauce => sauce.type === 'sauce');
@@ -46,7 +45,7 @@ const BurgerIngredients = () => {
         // eslint-disable-next-line
     },[data]);
 
-    const moveToPosition = (value) => {
+    const moveToPosition = (value: string) => {
         typesRef.current.forEach(type => {
             if(type.id === value) type.scrollIntoView({behavior: "smooth"}) 
         })
@@ -54,7 +53,7 @@ const BurgerIngredients = () => {
 
     return (
         <section className={styles['burger-ingredients']}>
-            <h1 className='text text_type_main-large' >Соберите бургер</h1>
+            <h1 className='text text_type_main-large'>Соберите бургер</h1>
             <div className={styles.tab}>
                 <Tab value="bun" active={tab === 'bun'} onClick={moveToPosition}>Булки</Tab>
                 <Tab value="sauce" active={tab === 'sauce'} onClick={moveToPosition}>Соусы</Tab>
@@ -63,7 +62,14 @@ const BurgerIngredients = () => {
             <div className={styles.scroll} ref={containerRef}>
                 {filterDataByType(data).map((ingredient, i )=> {
                     if (ingredient.length !== 0) {
-                        return <Ingredient ref={ref => typesRef.current[i] = ref} key={ingredient[0].type} data={ingredient} type={ingredient[0].type}/>
+                        const preparedData: {data: IBasicIngredient[], type: TypesMenu} = {
+                            data: ingredient,
+                            type: ingredient[0].type
+                        }
+                        return <Ingredient 
+                            ref={ref => typesRef.current[i] = ref as HTMLHeadingElement} 
+                            key={preparedData.type} 
+                            {...preparedData}/>
                     }
                     return null
                 })}

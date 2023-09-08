@@ -1,8 +1,14 @@
 import { useState } from "react"
+import { ReactNode } from "react"
 
 import Modal from "../components/modal/modal"
 
-const useModal = ({title, Component}) => {
+interface IUseModal {
+    title?: string,
+    Component: ReactNode
+}
+
+const useModal= ({title, Component}: IUseModal) => {
 
     const [isOpen, setOpen] = useState(false);
 
@@ -14,7 +20,7 @@ const useModal = ({title, Component}) => {
         setOpen(true)
     };
 
-    const renderModal = isOpen && (<Modal title={title} close={closeModal}>{Component}</Modal>);
+    const renderModal = isOpen ? (<Modal title={title} close={closeModal}>{Component}</Modal>) : null
     
     return { renderModal, openModal}
 }

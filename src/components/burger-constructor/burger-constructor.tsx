@@ -1,7 +1,7 @@
 import { useCallback, useMemo } from 'react';
 import { useDrop } from "react-dnd";
 import { useNavigate } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
+import { useAppDispatch, useAppSelector } from '../../hooks/store-hooks';
 import {  addToConstructor, resetConstructor } from '../../services/slices/constructor-slice';
 import { sendOrder, closeOrderModal, resetError } from '../../services/slices/order-slice';
 import { getSaucesAndMains, getBun, getHelper, getIsOrderModalOpen, 
@@ -13,33 +13,33 @@ import { ConstructorElement, Button, CurrencyIcon } from '@ya.praktikum/react-de
 import Modal from '../modal/modal';
 import Error from '../error/error';
 import Spinner from '../spinner/spinner';
-
+import { IBasicIngredient, IConcstructorIngredient } from '../../utils/types';
 import styles from './burger-constructor.module.css'
 
 const BurgerConstructor = () => {
 
     const[{transform, background}, dropTarget] = useDrop({
         accept: 'ingredients',
-        drop(itemId) {
+        drop(itemId: {data: IBasicIngredient}) {
             dispatch(addToConstructor(itemId.data))
         },
         collect: monitor => ({
-            transform: monitor.isOver() ? 'Scale(.95)' : null,
-            background: monitor.isOver() ? '#171719' : null
+            transform: monitor.isOver() ? 'Scale(.95)' : "",
+            background: monitor.isOver() ? '#171719' : ""
         })
     });
 
-    const saucesAndMains = useSelector(getSaucesAndMains)
-    const bun = useSelector(getBun)
-    const helper = useSelector(getHelper)
-    const isOrderModalOpen = useSelector(getIsOrderModalOpen)
-    const isLoading = useSelector(getIsLoadingOrder)
-    const isError = useSelector(getIsErrorOrder)
-    const numberOrder = useSelector(getNumberOrder)
-    const user = useSelector(getUserName)
+    const saucesAndMains: IConcstructorIngredient[]  = useAppSelector(getSaucesAndMains)
+    const bun: IConcstructorIngredient = useAppSelector(getBun)
+    const helper = useAppSelector(getHelper)
+    const isOrderModalOpen = useAppSelector(getIsOrderModalOpen)
+    const isLoading = useAppSelector(getIsLoadingOrder)
+    const isError = useAppSelector(getIsErrorOrder)
+    const numberOrder = useAppSelector(getNumberOrder)
+    const user = useAppSelector(getUserName)
 
     const navigate = useNavigate()
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     const total = useMemo(() =>
     [...saucesAndMains,{...bun},{...bun}].reduce((acc,curr) => acc + (curr.price === undefined?  0 : curr.price), 0),
@@ -51,13 +51,13 @@ const BurgerConstructor = () => {
     const fetchOrder = () => {
         if(!user) return navigate('/login')
         const ingredients = [...saucesAndMains, {...bun}].map(ingredient => ingredient._id)
-        const dataOrder = {ingredients}
+        const dataOrder: {ingredients: string[]} = {ingredients}
         dispatch(sendOrder(dataOrder))
     }
 
     const closeModal = useCallback(() =>  {
         dispatch(closeOrderModal())
-        dispatch(resetConstructor())
+        dispatch(resetConstructor('reset'))
     },[dispatch])
 
     const tryAgain = useCallback(() =>  {

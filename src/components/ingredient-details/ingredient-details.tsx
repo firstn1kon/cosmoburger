@@ -1,18 +1,18 @@
 import { useMemo } from 'react';
 import { useParams } from 'react-router-dom';
-import { useSelector } from 'react-redux';
 import { getIngredients, getIsLoadingIngredients } from '../../services/slices/selectors';
-
 import { NotFoundPage } from '../../pages';
 import Spinner from '../spinner/spinner';
-
+import { useAppSelector } from '../../hooks/store-hooks';
+import { IBasicIngredient } from '../../utils/types';
 import styles from './ingredient-details.module.css'
+
 
 const IngredientDetails = () => {
 
     const {ingredientId} = useParams()
-    const ingredients = useSelector(getIngredients)
-    const isLoading = useSelector(getIsLoadingIngredients)
+    const ingredients: IBasicIngredient[] = useAppSelector(getIngredients)
+    const isLoading: boolean = useAppSelector(getIsLoadingIngredients)
 
     const  data = useMemo(() => ingredients.find((ingredient) => ingredient._id === ingredientId),[ingredientId, ingredients])
 

@@ -1,6 +1,6 @@
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
-import { useSelector } from 'react-redux';
+import { useAppSelector } from "../hooks/store-hooks";
 import { getIsLoadingIngredients } from "../services/slices/selectors";
 import { getIsErrorIngredients } from "../services/slices/selectors";
 
@@ -11,8 +11,8 @@ import Error from "../components/error/error";
 
 export const MainPage = () => {
 
-    const isLoading = useSelector(getIsLoadingIngredients)
-    const isError = useSelector(getIsErrorIngredients)
+    const isLoading = useAppSelector(getIsLoadingIngredients)
+    const isError = useAppSelector(getIsErrorIngredients)
 
     return (
         <DndProvider backend={HTML5Backend}>

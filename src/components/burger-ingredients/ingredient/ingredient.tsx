@@ -1,30 +1,33 @@
-import PropTypes from 'prop-types';
-import { ingredientPropType } from '../../../utils/prop-types';
-import { forwardRef } from 'react';
-
+import { ForwardedRef, forwardRef, FC } from 'react';
+import { IBasicIngredient, TypesMenu } from '../../../utils/types';
 import ViewIngredient from './view-ingredient/view-ingredient';
-
 import styles from '../burger-ingredients.module.css'
 
-const Ingredient = forwardRef(({data, type}, ref) => {
+interface ICurrentSection {
+    data: IBasicIngredient[],
+    type: TypesMenu,
+    ref: ForwardedRef<HTMLHeadingElement>
+}
+
+const Ingredient: FC <ICurrentSection> = forwardRef(({data, type}, ref) => {
 
     let titleType;
 
     switch (type) {
-        case 'bun':
+        case TypesMenu.BUN:
             titleType = 'Булки'
             break;
-        case 'main':
+        case TypesMenu.MAIN:
             titleType = 'Начинки';
             break;
-        case 'sauce':
+        case TypesMenu.SAUCE:
             titleType = 'Соусы';
             break;
         default: titleType = 'Булка' 
     };
     return (
         <>
-            <h2 id={type} data-scroll={type} ref={ref} className={`${styles.title} text text_type_main-medium`}>{titleType}</h2>
+            <h2 id={type} ref={ref} className={`${styles.title} text text_type_main-medium`}>{titleType}</h2>
             <ul className={styles.wrapper}>
                 {data.map(ingredient => <ViewIngredient key={ingredient._id} data={ingredient}/>)}
             </ul>
@@ -33,8 +36,3 @@ const Ingredient = forwardRef(({data, type}, ref) => {
 })
 
 export default Ingredient
-
-Ingredient.propTypes = {
-    data: PropTypes.arrayOf(ingredientPropType).isRequired,
-    type: PropTypes.oneOf(["bun", "main", "sauce"]).isRequired,
-}

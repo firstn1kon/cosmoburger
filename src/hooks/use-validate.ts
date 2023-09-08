@@ -1,10 +1,23 @@
 import { useState } from "react";
 import { regexEmail } from "../utils/utils";
 
-const useValidate = ({inputValues={},values}) => {
+interface IUseValidate<T> {
+    inputValues: T,
+    values: string[],
+}
 
-    const [value, setValue] = useState(inputValues);
-    const [errors, setErrors] = useState({
+interface IErrors {
+    [key: string]: {
+        error: boolean, 
+        errorText: string, 
+        disabled: boolean
+    }
+}
+
+const useValidate = <T>({inputValues, values}: IUseValidate<T>) => {
+
+    const [value, setValue] = useState<typeof inputValues>(inputValues);
+    const [errors, setErrors] = useState<IErrors>({
         email: {
             error: false,
             errorText: 'формат email@email.ru',
@@ -12,7 +25,7 @@ const useValidate = ({inputValues={},values}) => {
         },
         password: {
             error: false,
-            errorText: 'Минимум 6 символов',
+            errorText: 'Минимум 8 символов',
             disabled: true
         },
         name: {
@@ -35,7 +48,7 @@ const useValidate = ({inputValues={},values}) => {
         setErrors(reset)
     }
 
-    const onChange = e => {
+    const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const value = e.target.value
         const field = e.target.name
         setValue(inputs => ({...inputs, [field]: value}))

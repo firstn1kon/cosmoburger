@@ -1,10 +1,13 @@
-import PropTypes from 'prop-types';
-
 import done from '../../images/done.svg'
-
 import styles from './order-details.module.css'
+import { FC } from 'react';
 
-const OrderDetails = ({uid}) => {
+
+interface IOrderDetails {
+    uid: number
+}
+
+const OrderDetails: FC<IOrderDetails> = ({uid}) => {
     
     return (
         <div className={styles.wrapper}>
@@ -21,6 +24,3 @@ const OrderDetails = ({uid}) => {
 
 export default OrderDetails
 
-OrderDetails.propTypes = {
-    uid: PropTypes.number.isRequired
-};

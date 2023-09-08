@@ -1,30 +1,40 @@
-import PropTypes from 'prop-types';
 import { useCallback, useRef  } from 'react';
 import { useDrag, useDrop } from 'react-dnd';
 import { useDispatch } from 'react-redux';
 import { deleteFromConstructor, sortInConstrucor } from '../../../services/slices/constructor-slice';
-import { ingredientConstrucorPropType } from '../../../utils/prop-types';
-
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-
+import { IConcstructorIngredient } from '../../../utils/types';
+import { FC } from 'react';
+import type { Identifier, XYCoord } from 'dnd-core'
 import styles from '../burger-constructor.module.css'
 
-const ConstructorIngredient = ({data, index}) => {
+interface IConstructor {
+  data: IConcstructorIngredient,
+  index: number
+}
+
+interface IDropItem {
+  _uid: string,
+  index: number,
+  type: string
+}
+
+const ConstructorIngredient: FC<IConstructor> = ({data, index}) => {
     const {name, _uid, price, image_mobile} = data
 
     const dispatch = useDispatch();
-    const ref = useRef(null);
+    const ref = useRef<HTMLDivElement>(null);
 
     const[{opacity, classDrop}, dragRef] = useDrag({
         type: 'ingredients-constructor',
         item: {_uid, index},
         collect: monitor => ({
             opacity: monitor.isDragging() ? 1 : 1,
-            classDrop: monitor.isDragging() ? styles.drop : null
+            classDrop: monitor.isDragging() ? styles.drop : ""
         })
     });
 
-    const [{ handlerId }, dropTraget] = useDrop({
+    const [{ handlerId }, dropTraget] = useDrop<IDropItem, void, { handlerId: Identifier | null }>({
         accept: 'ingredients-constructor',
         collect(monitor) {
           return {
@@ -35,7 +45,7 @@ const ConstructorIngredient = ({data, index}) => {
           if (!ref.current) {
             return
           }
-          const dragIndex = item.index
+          const dragIndex = item.index as number
           const hoverIndex = index
           if (dragIndex === hoverIndex) {
             return
@@ -43,8 +53,8 @@ const ConstructorIngredient = ({data, index}) => {
           const hoverBoundingRect = ref.current?.getBoundingClientRect()
           const hoverMiddleY =
             (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2
-          const clientOffset = monitor.getClientOffset()
-          const hoverClientY = clientOffset.y - hoverBoundingRect.top
+          const clientOffset= monitor.getClientOffset() as XYCoord
+          const hoverClientY = clientOffset.y - hoverBoundingRect.top 
           if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
             return
           }
@@ -81,7 +91,3 @@ const ConstructorIngredient = ({data, index}) => {
 
 export default ConstructorIngredient
 
-ConstructorIngredient.propTypes = {
-  data: ingredientConstrucorPropType.isRequired,
-  index: PropTypes.number.isRequired
-}

@@ -1,27 +1,25 @@
-import { useCallback, useEffect } from "react"
+import { useCallback, useEffect, FormEvent } from "react"
 import { Link, useNavigate } from "react-router-dom"
-import { useDispatch, useSelector } from "react-redux"
 import { getIsLoadingUser, getIsErrorUser } from '../../services/slices/selectors'
 import { fogotPassword, resetError } from "../../services/slices/user-slice"
-import useValidate from "../../hooks/use-validate"
-
+import { useAppDispatch, useAppSelector } from "../../hooks/store-hooks"
 import Error from "../error/error"
 import Spinner from "../spinner/spinner"
-import { EmailInput, Button } from "@ya.praktikum/react-developer-burger-ui-components"
-
+import { Button, Input } from "@ya.praktikum/react-developer-burger-ui-components"
+import useValidate from "../../hooks/use-validate"
 import styles from "./forgot-password.module.css"
 
 const ForgotPassword = () => {
 
     const {onChange, errors, disabled, value} = useValidate({inputValues: {email: ''} , values: ['email']})
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const navigate = useNavigate()
-    const isLoading = useSelector(getIsLoadingUser)
-    const isError = useSelector(getIsErrorUser)
+    const isLoading = useAppSelector(getIsLoadingUser)
+    const isError = useAppSelector(getIsErrorUser)
 
-    const onSubmit = (e) => {
+    const onSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        dispatch(fogotPassword(value)).then(()=> navigate('/reset-password'))
+        dispatch(fogotPassword(value)).then(() => navigate('/reset-password'))
     }
 
     const tryAgain = useCallback(() =>  {
@@ -40,14 +38,14 @@ const ForgotPassword = () => {
     return (
         <form className={styles.wrapper} onSubmit={onSubmit}>
             <h2 className="text text_type_main-medium">Восстановление пароля</h2>
-            <EmailInput
-            onChange={onChange}
-            value={value.email}
-            name={'email'}
-            isIcon={false}
-            extraClass="mt-6"
-            error={errors.email.error}
-            errorText={errors.email.errorText}
+            <Input
+                onChange={onChange}
+                value={value.email}
+                name={'email'}
+                placeholder={"e-mail"}
+                extraClass="mt-6"
+                error={errors.email.error}
+                errorText={errors.email.errorText}
             />
             <Button disabled={isLoading || disabled} htmlType="submit" type="primary" size="medium" extraClass="mt-6">
                 {statusButton}

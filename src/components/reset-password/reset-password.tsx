@@ -1,17 +1,18 @@
-import { useDispatch, useSelector } from "react-redux"
-import { useCallback, useEffect } from 'react'
+import { useCallback, useEffect, useState, useRef, FormEvent } from 'react'
 import { Link, Navigate, useLocation, useNavigate } from 'react-router-dom'
 import { resetPassword, resetError } from "../../services/slices/user-slice"
 import { getIsLoadingUser, getIsErrorUser, getTransfer } from '../../services/slices/selectors'
+import { useAppDispatch, useAppSelector } from "../../hooks/store-hooks"
+import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components'
 import useValidate from '../../hooks/use-validate'
-
-import { Input, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components'
 import Error from '../error/error'
 import Spinner from '../spinner/spinner'
-
 import styles from "./reset-password.module.css"
 
 const ResetPassword = () => {
+
+    const [isShow, setShow] = useState<boolean>(false);
+    const passwordRef = useRef<HTMLInputElement>(null);
 
     const {onChange, errors, disabled, value} = useValidate({
         inputValues: {password: "", token: ""},
@@ -20,11 +21,11 @@ const ResetPassword = () => {
 
     const location = useLocation();
     const navigate = useNavigate()
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
-    const isLoading = useSelector(getIsLoadingUser)
-    const isError = useSelector(getIsErrorUser)
-    const transfer = useSelector(getTransfer)
+    const isLoading = useAppSelector(getIsLoadingUser)
+    const isError = useAppSelector(getIsErrorUser)
+    const transfer = useAppSelector(getTransfer)
 
     const tryAgain = useCallback(() =>  {
         dispatch(resetError())
@@ -37,11 +38,16 @@ const ResetPassword = () => {
     // eslint-disable-next-line
     },[])
 
-    const onSubmit = (e) => {
+    const onSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         dispatch(resetPassword(value))
             .unwrap()
             .then((res) => res.success ? navigate('/login') : null)
+    }
+
+    const onIconClick = () => {
+        setShow(!isShow)
+        if(passwordRef.current) passwordRef.current.focus()
     }
 
     if (!transfer) {
@@ -54,25 +60,29 @@ const ResetPassword = () => {
     return (
         <form className={styles.wrapper} onSubmit={onSubmit}>
             <h2 className="text text_type_main-medium">Восстановление пароля</h2>
-            <PasswordInput
-            onChange={onChange}
-            value={value.password}
-            name={'password'}
-            extraClass="mt-6"
-            placeholder={'Введите новый пароль'}
-            error={errors.password.error}
-            errorText={errors.password.errorText}
+            <Input
+                onChange={onChange}
+                value={value.password}
+                placeholder={"пароль"}
+                type={isShow ? "text" : "password"}
+                name={'password'}
+                extraClass="mt-6"
+                icon={isShow ? "HideIcon" : "ShowIcon"}
+                onIconClick={onIconClick}
+                error={errors.password.error}
+                errorText={errors.password.errorText}
+                ref={passwordRef}
             />
             <Input
-            type={'text'}
-            placeholder={'Введите код из письма'}
-            onChange={onChange}
-            value={value.token}
-            name={'token'}
-            error={errors.token.error}
-            errorText={errors.token.errorText}
-            size={'default'}
-            extraClass="mt-6"
+                type={'text'}
+                placeholder={'Введите код из письма'}
+                onChange={onChange}
+                value={value.token}
+                name={'token'}
+                error={errors.token.error}
+                errorText={errors.token.errorText}
+                size={'default'}
+                extraClass="mt-6"
             />
             <Button disabled={isLoading || disabled} htmlType="submit" type="primary" size="medium" extraClass="mt-6">
                {statusButton}

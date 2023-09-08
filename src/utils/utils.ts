@@ -1,5 +1,16 @@
 //Tokens utils
-export const setTokens = (res) => {
+
+export interface ISetTokens {
+    success: boolean,
+    accessToken: string,
+    refreshToken: string,
+    user: {
+        email: string,
+        name: string,
+    }
+}
+
+export const setTokens = (res: ISetTokens) => {
     localStorage.setItem('accessToken', res.accessToken)
     localStorage.setItem('refreshToken', res.refreshToken)
 }

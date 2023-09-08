@@ -1,5 +1,5 @@
 import { MainPage } from "./main-page";
-import { NotFoundPage } from "./not-found-page.jsx";
+import { NotFoundPage } from "./not-found-page";
 import { LoginPage } from "./login-page";
 import { RegisterPage } from "./register-page";
 import { ForgotPasswordPage } from "./forgot-password-page";
