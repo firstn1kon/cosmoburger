@@ -10,8 +10,8 @@ import styles from './ingredient-details.module.css'
 const IngredientDetails = () => {
 
     const {ingredientId} = useParams()
-    const ingredients= useAppSelector(getIngredients)
-    const isLoading= useAppSelector(getIsLoadingIngredients)
+    const ingredients = useAppSelector(getIngredients)
+    const isLoading = useAppSelector(getIsLoadingIngredients)
 
     const  data = useMemo(() => ingredients.find((ingredient) => ingredient._id === ingredientId),[ingredientId, ingredients])
 
