@@ -4,18 +4,17 @@ export interface ISetTokens {
     success: boolean,
     accessToken: string,
     refreshToken: string,
-    user: {
+    user?: {
         email: string,
         name: string,
     }
 }
-
 export const setTokens = (res: ISetTokens) => {
     localStorage.setItem('accessToken', res.accessToken)
     localStorage.setItem('refreshToken', res.refreshToken)
 }
 
-export const getAccessToken = () => localStorage.getItem('accessToken')
+export const getAccessToken = () =>  localStorage.getItem('accessToken')
 export const getRefreshToken = () => localStorage.getItem('refreshToken')
 
 export const checkRefreshOrAccessTokens = () => {

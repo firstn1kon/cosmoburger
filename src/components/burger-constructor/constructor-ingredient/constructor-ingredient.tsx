@@ -3,7 +3,7 @@ import { useDrag, useDrop } from 'react-dnd';
 import { useDispatch } from 'react-redux';
 import { deleteFromConstructor, sortInConstrucor } from '../../../services/slices/constructor-slice';
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import { IConcstructorIngredient } from '../../../utils/types';
+import { IConcstructorIngredient } from '../../../utils/types/common.types';
 import { FC } from 'react';
 import type { Identifier, XYCoord } from 'dnd-core'
 import styles from '../burger-constructor.module.css'

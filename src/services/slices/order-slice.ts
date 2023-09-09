@@ -1,9 +1,23 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { postOrder } from "../../utils/api";
 
-const initialState = {
+export interface IOrderState {
     data: {
-        succes: false,
+        success: boolean,
+        name: string,
+        order: {
+            number: number | null
+        }
+
+    }
+    isOrderModalOpen: boolean,
+    isLoading: boolean,
+    isError: boolean | undefined | string 
+}
+
+const initialState: IOrderState = {
+    data: {
+        success: false,
         name: "",
         order: {
             number: null

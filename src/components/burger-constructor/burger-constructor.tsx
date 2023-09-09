@@ -13,7 +13,7 @@ import { ConstructorElement, Button, CurrencyIcon } from '@ya.praktikum/react-de
 import Modal from '../modal/modal';
 import Error from '../error/error';
 import Spinner from '../spinner/spinner';
-import { IBasicIngredient, IConcstructorIngredient } from '../../utils/types';
+import { IBasicIngredient, IConcstructorIngredient } from '../../utils/types/common.types';
 import styles from './burger-constructor.module.css'
 
 const BurgerConstructor = () => {

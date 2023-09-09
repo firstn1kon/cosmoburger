@@ -8,13 +8,13 @@ import useValidate from '../../hooks/use-validate'
 import Error from '../error/error'
 import Spinner from '../spinner/spinner'
 import styles from './register.module.css'
-import { IBasicUserPostData } from '../../utils/api'
+
 const Register = () => {
 
     const [isShow, setShow] = useState<boolean>(false);
     const passwordRef = useRef<HTMLInputElement>(null);
 
-    const {onChange, errors, disabled, value} = useValidate<IBasicUserPostData>({
+    const {onChange, errors, disabled, value} = useValidate({
         inputValues: {name: '', email: '', password: ''}, 
         values: ['email', 'password', 'name']
     })

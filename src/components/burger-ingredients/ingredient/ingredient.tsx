@@ -1,5 +1,5 @@
 import { ForwardedRef, forwardRef, FC } from 'react';
-import { IBasicIngredient, TypesMenu } from '../../../utils/types';
+import { IBasicIngredient, TypesMenu } from '../../../utils/types/common.types';
 import ViewIngredient from './view-ingredient/view-ingredient';
 import styles from '../burger-ingredients.module.css'
 

@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import { createSelector } from "@reduxjs/toolkit";
 import { getBun, getSaucesAndMains } from '../../../../services/slices/selectors';
 import { Counter, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components'
-import { IBasicIngredient } from '../../../../utils/types';
+import { IBasicIngredient } from '../../../../utils/types/common.types';
 import { FC } from 'react';
 import styles from '../../burger-ingredients.module.css'
 

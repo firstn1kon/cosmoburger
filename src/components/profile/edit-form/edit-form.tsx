@@ -4,6 +4,7 @@ import { updateUser } from "../../../services/slices/user-slice";
 import { getUserData } from "../../../services/slices/selectors";
 import { Input, Button } from "@ya.praktikum/react-developer-burger-ui-components"
 import useValidate from "../../../hooks/use-validate";
+import { IBasicUserPostData } from "../../../utils/types/api.types";
 import styles from "../profile.module.css"
 
 const EditForm = () => {
@@ -16,7 +17,7 @@ const EditForm = () => {
         password: true
     })
     const nameRef = useRef<HTMLInputElement[]>([]);
-    const {onChange, errors, reset, setValue, value} = useValidate<{name: string, email: string, password: string}>({inputValues: {name: "", email: "", password: ""}, values: ['email', 'name']})
+    const {onChange, errors, reset, setValue, value} = useValidate<Partial<IBasicUserPostData>>({inputValues: {}, values: ['email', 'name', "password"]})
 
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
         onChange(e)
@@ -31,7 +32,7 @@ const EditForm = () => {
 
     const onReset = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        setValue({name, email, password: value.password})
+        setValue({name, email})
         setIsVisible(false)
         reset()
     }
@@ -57,8 +58,8 @@ const EditForm = () => {
     }
 
     useEffect(()=> {
-        setValue({name, email, password: value.password})
-    },[name, email, setValue, value.password])
+        setValue({name, email})
+    },[name, email, setValue])
 
     const disabled = errors.name.error || errors.email.error || errors.password.error
 

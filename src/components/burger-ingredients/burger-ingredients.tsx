@@ -2,7 +2,7 @@ import { useCallback, useEffect, useRef} from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks/store-hooks';
 import { setCurrentTab } from '../../services/slices/ingredients-slice';
 import { getIngredients, getCurrentTab } from '../../services/slices/selectors';
-import { IBasicIngredient, TypesMenu } from '../../utils/types';
+import { IBasicIngredient, TypesMenu } from '../../utils/types/common.types';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
 import Ingredient from './ingredient/ingredient';
 import styles from './burger-ingredients.module.css'

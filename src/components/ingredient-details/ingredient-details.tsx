@@ -4,7 +4,7 @@ import { getIngredients, getIsLoadingIngredients } from '../../services/slices/s
 import { NotFoundPage } from '../../pages';
 import Spinner from '../spinner/spinner';
 import { useAppSelector } from '../../hooks/store-hooks';
-import { IBasicIngredient } from '../../utils/types';
+import { IBasicIngredient } from '../../utils/types/common.types';
 import styles from './ingredient-details.module.css'
 
 
