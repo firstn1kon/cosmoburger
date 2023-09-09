@@ -19,7 +19,7 @@ const BurgerIngredients = () => {
         const callback = (entries: IntersectionObserverEntry[]) => {
             entries.forEach((entry) => {
                 if (entry.isIntersecting) {
-                    dispatch(setCurrentTab((entry.target.id)));
+                    dispatch(setCurrentTab((entry.target.id as "bun" | "main" | "sauce")))
                 }
               });
         }
@@ -38,9 +38,9 @@ const BurgerIngredients = () => {
     })
 
     const filterDataByType = useCallback((data: IBasicIngredient[]) : IBasicIngredient[][]  => {
-        const buns = data.filter(buns => buns.type === 'bun');
-        const main = data.filter(main => main.type === 'main');
-        const sauces = data.filter(sauce => sauce.type === 'sauce');
+        const buns = data.filter(buns => buns.type === TypesMenu.BUN);
+        const main = data.filter(main => main.type === TypesMenu.MAIN);
+        const sauces = data.filter(sauce => sauce.type === TypesMenu.SAUCE);
         return [buns, sauces, main];
         // eslint-disable-next-line
     },[data]);

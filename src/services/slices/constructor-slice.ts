@@ -1,9 +1,32 @@
-import { createSlice, nanoid } from "@reduxjs/toolkit";
+import { createSlice, nanoid, PayloadAction } from "@reduxjs/toolkit";
+import { IConcstructorIngredient } from "../../utils/types/common.types";
+import sample from "../../images/samplebun.png"
 
-const initialState = {
-        bun: false,
+interface IBasicbun {
+    name: string, 
+    price: number, 
+    image_mobile: string, 
+    _id: string
+
+}
+
+interface IConstructorState {
+    bun:  IBasicbun | IConcstructorIngredient
+    saucesAndMains: IConcstructorIngredient[],
+    helper: boolean,
+    isBunAdd: boolean, 
+}
+
+const initialState: IConstructorState = {
+        bun: {
+            name: "выберете булку",
+            price: 0,
+            image_mobile: sample,
+            _id: ""
+        },
         saucesAndMains: [],
-        helper: true
+        helper: true,
+        isBunAdd: false
 }
 
 const constructorSlice = createSlice({
@@ -11,9 +34,10 @@ const constructorSlice = createSlice({
     initialState,
     reducers: {
         addToConstructor: {
-            reducer: (state, action) => {
+            reducer: (state, action: PayloadAction<IConcstructorIngredient>) => {
                 if (action.payload.type === 'bun') {
                     state.bun = action.payload;
+                    state.isBunAdd = true;
                 }
                 else {
                     state.saucesAndMains.unshift(action.payload)

@@ -5,7 +5,7 @@ import { useAppDispatch, useAppSelector } from '../../hooks/store-hooks';
 import {  addToConstructor, resetConstructor } from '../../services/slices/constructor-slice';
 import { sendOrder, closeOrderModal, resetError } from '../../services/slices/order-slice';
 import { getSaucesAndMains, getBun, getHelper, getIsOrderModalOpen, 
-         getIsLoadingOrder, getIsErrorOrder, getNumberOrder, getUserName } from '../../services/slices/selectors';
+         getIsLoadingOrder, getIsErrorOrder, getNumberOrder, getUserName, getIsBunAdd } from '../../services/slices/selectors';
 import ConstructorIngredient from './constructor-ingredient/constructor-ingredient';
 import OrderDetails from '../order-details/order-details';
 import DragHelper from './drag-helper/drag-helper';
@@ -13,7 +13,7 @@ import { ConstructorElement, Button, CurrencyIcon } from '@ya.praktikum/react-de
 import Modal from '../modal/modal';
 import Error from '../error/error';
 import Spinner from '../spinner/spinner';
-import { IBasicIngredient, IConcstructorIngredient } from '../../utils/types/common.types';
+import { IBasicIngredient } from '../../utils/types/common.types';
 import styles from './burger-constructor.module.css'
 
 const BurgerConstructor = () => {
@@ -29,14 +29,15 @@ const BurgerConstructor = () => {
         })
     });
 
-    const saucesAndMains: IConcstructorIngredient[]  = useAppSelector(getSaucesAndMains)
-    const bun: IConcstructorIngredient = useAppSelector(getBun)
+    const saucesAndMains  = useAppSelector(getSaucesAndMains)
+    const bun = useAppSelector(getBun)
     const helper = useAppSelector(getHelper)
     const isOrderModalOpen = useAppSelector(getIsOrderModalOpen)
     const isLoading = useAppSelector(getIsLoadingOrder)
     const isError = useAppSelector(getIsErrorOrder)
     const numberOrder = useAppSelector(getNumberOrder)
     const user = useAppSelector(getUserName)
+    const isBunAdd = useAppSelector(getIsBunAdd)
 
     const navigate = useNavigate()
     const dispatch = useAppDispatch();
@@ -45,7 +46,7 @@ const BurgerConstructor = () => {
     [...saucesAndMains,{...bun},{...bun}].reduce((acc,curr) => acc + (curr.price === undefined?  0 : curr.price), 0),
     [saucesAndMains, bun]);
     
-    const dnoneOrFadeIn = saucesAndMains && bun ? styles.fadeIn : styles.dnone
+    const dnoneOrFadeIn = saucesAndMains && isBunAdd ? styles.fadeIn : styles.dnone
     const statusButton = isLoading ? <Spinner modal={false} loadText='Оформляем'/> : 'Оформить заказ'
 
     const fetchOrder = () => {
@@ -57,7 +58,7 @@ const BurgerConstructor = () => {
 
     const closeModal = useCallback(() =>  {
         dispatch(closeOrderModal())
-        dispatch(resetConstructor('reset'))
+        dispatch(resetConstructor())
     },[dispatch])
 
     const tryAgain = useCallback(() =>  {
@@ -99,7 +100,14 @@ const BurgerConstructor = () => {
                     <p className="text text_type_digits-medium mr-2">{total? total : 0}</p>
                     <CurrencyIcon type="primary" />
                 </div>
-                <Button  disabled={helper || isLoading} htmlType="button" type="primary" size="large" onClick={fetchOrder}>{statusButton}</Button>
+                <Button  
+                    disabled={helper || isLoading} 
+                    htmlType="button" 
+                    type="primary" 
+                    size="large" 
+                    onClick={fetchOrder}>
+                        {statusButton}
+                </Button>
             </div>
             {isOrderModalOpen && numberOrder && <Modal close={closeModal}><OrderDetails uid={numberOrder}/></Modal>}
             {isError && <Error err={isError} tryAgain={tryAgain}/>}

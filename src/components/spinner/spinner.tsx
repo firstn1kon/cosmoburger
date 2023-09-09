@@ -1,4 +1,3 @@
-
 import logo from '../../images/spinner.svg'
 import { FC } from 'react'
 import styles from './spinner.module.css'

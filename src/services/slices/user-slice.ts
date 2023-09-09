@@ -1,7 +1,18 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { postRegisterUser, postLoginUser, postFogotPassword, postResetPassword, getUser, patchUser, postLogoutUser } from "../../utils/api";
 
-const initialState = {
+interface IUserState {
+    user: {
+        name: string,
+        email: string,
+    }
+    isCkechedAuth: boolean,
+    isLoading: boolean,
+    isError: boolean | undefined | string,
+    transfer: boolean 
+}
+
+const initialState: IUserState = {
     user: {
         name: "",
         email: ""

@@ -9,7 +9,7 @@ import styles from "../profile.module.css"
 
 const EditForm = () => {
     const dispatch = useAppDispatch();
-    const {name, email}: {name: string, email: string} = useAppSelector(getUserData);
+    const {name, email} = useAppSelector(getUserData);
     const [isVisible, setIsVisible] = useState(false)
     const [disable, setDisable] = useState({
         name: true,
@@ -17,7 +17,10 @@ const EditForm = () => {
         password: true
     })
     const nameRef = useRef<HTMLInputElement[]>([]);
-    const {onChange, errors, reset, setValue, value} = useValidate<Partial<IBasicUserPostData>>({inputValues: {}, values: ['email', 'name', "password"]})
+    const {onChange, errors, reset, setValue, value} = useValidate<Partial<IBasicUserPostData>>({
+        inputValues: {}, 
+        values: ['email', 'name', "password"]
+    })
 
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
         onChange(e)

@@ -11,7 +11,7 @@ const AppHeader = () => {
   const {pathname} = useLocation();
   const user = useAppSelector(getUserName)
 
-  const showUserName: string = user ? user : 'Личный кабинет'
+  const showUserName= user ? user : 'Личный кабинет'
 
     return (
         <header className={styles.header}>

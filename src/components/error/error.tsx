@@ -6,7 +6,7 @@ import styles from './error.module.css'
 const outter = document.createElement('div') as HTMLDivElement
 
 interface IError {
-    err: string,
+    err: string | boolean,
     reload?: boolean,
     tryAgain?: () => void,
     inline?: boolean

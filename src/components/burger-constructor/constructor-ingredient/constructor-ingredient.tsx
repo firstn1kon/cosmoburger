@@ -1,6 +1,6 @@
 import { useCallback, useRef  } from 'react';
 import { useDrag, useDrop } from 'react-dnd';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '../../../hooks/store-hooks';
 import { deleteFromConstructor, sortInConstrucor } from '../../../services/slices/constructor-slice';
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { IConcstructorIngredient } from '../../../utils/types/common.types';
@@ -22,7 +22,7 @@ interface IDropItem {
 const ConstructorIngredient: FC<IConstructor> = ({data, index}) => {
     const {name, _uid, price, image_mobile} = data
 
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const ref = useRef<HTMLDivElement>(null);
 
     const[{opacity, classDrop}, dragRef] = useDrag({

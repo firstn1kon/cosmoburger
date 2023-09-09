@@ -1,7 +1,15 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import { getAllIngredients } from "../../utils/api";
+import { IBasicIngredient } from "../../utils/types/common.types";
 
-const initialState = {
+interface IingredientsState {
+    ingredients: IBasicIngredient[], 
+    isLoading: boolean,
+    isError: boolean | undefined | string,
+    currentTab: "bun" | "main" | "sauce"
+}
+
+const initialState: IingredientsState = {
     ingredients: [],
     isLoading: false,
     isError: false,
@@ -12,7 +20,7 @@ const mainSlice = createSlice({
     name: 'ingredients',
     initialState,
     reducers: {
-        setCurrentTab: (state, action) => {state.currentTab = action.payload}
+        setCurrentTab: (state, action: PayloadAction<IingredientsState["currentTab"]>) => {state.currentTab = action.payload}
     },
     extraReducers: builder =>
         builder

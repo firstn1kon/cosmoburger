@@ -1,15 +1,7 @@
 //Tokens utils
+import { IResponseRefreshToken } from "./types/api.types"
 
-export interface ISetTokens {
-    success: boolean,
-    accessToken: string,
-    refreshToken: string,
-    user?: {
-        email: string,
-        name: string,
-    }
-}
-export const setTokens = (res: ISetTokens) => {
+export const setTokens = (res: IResponseRefreshToken) => {
     localStorage.setItem('accessToken', res.accessToken)
     localStorage.setItem('refreshToken', res.refreshToken)
 }
