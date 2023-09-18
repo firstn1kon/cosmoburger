@@ -20,6 +20,11 @@ body {
   column-gap: 40px;
 }
 
+.container {
+  max-width: 1260px;
+  margin: 0 auto;
+}
+
 /* Firefox */
 * {
   scrollbar-width: auto;
@@ -29,6 +34,7 @@ body {
 /* Chrome, Edge, and Safari */
 *::-webkit-scrollbar {
   width: 8px;
+  height: 8px
 }
 
 *::-webkit-scrollbar-track {
@@ -40,3 +46,15 @@ body {
   border-radius: 0px;
 }
 
+.fadeIn {
+  animation: fadeIn .2s linear;
+}
+
+@keyframes fadeIn {
+	0% {
+		opacity: 0
+	}
+	100% {
+		opacity: 1;
+	}
+}

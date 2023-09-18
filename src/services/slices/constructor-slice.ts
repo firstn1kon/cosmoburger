@@ -1,6 +1,7 @@
 import { createSlice, nanoid, PayloadAction } from "@reduxjs/toolkit";
 import { IConcstructorIngredient } from "../../utils/types/common.types";
 import sample from "../../images/samplebun.png"
+import { SliceActions } from "../../utils/types/common.types";
 
 interface IBasicbun {
     name: string, 
@@ -49,7 +50,7 @@ const constructorSlice = createSlice({
         deleteFromConstructor: (state, action) => {
             const index = state.saucesAndMains.findIndex(item => item._uid === action.payload)
             if (index !== -1) state.saucesAndMains.splice(index, 1)
-            if(!state.saucesAndMains.length && !state.bun) state.helper = true
+            if(!state.saucesAndMains.length && !state.bun._id) state.helper = true
         },
         sortInConstrucor: (state, action) => {
             let temp = state.saucesAndMains[action.payload.hoverIndex]
@@ -71,3 +72,5 @@ export const {
     sortInConstrucor,
     resetConstructor,
 } = actions;
+
+export type TKitActions = SliceActions<typeof constructorSlice.actions>;

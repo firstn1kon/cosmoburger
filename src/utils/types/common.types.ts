@@ -22,3 +22,17 @@ export enum TypesMenu  {
     MAIN = "main",
     SAUCE = "sauce"
 }
+
+export interface IBaseOrderWs  {
+    _id: string;
+    createdAt: string;
+    updatedAt: string;
+    ingredients: string[];
+    name: string;
+    number: number;
+    status: string;
+}
+
+ export  type SliceActions<T> = {
+    [K in keyof T]: T[K] extends (...args: any[]) => infer A ? A : never;
+}[keyof T]

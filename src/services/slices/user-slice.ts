@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { postRegisterUser, postLoginUser, postFogotPassword, postResetPassword, getUser, patchUser, postLogoutUser } from "../../utils/api";
+import { SliceActions } from "../../utils/types/common.types";
 
 interface IUserState {
     user: {
@@ -168,3 +169,5 @@ export const logoutUser = createAsyncThunk(
     'user/logout-user',
     postLogoutUser
 )
+
+export type TUserActions = SliceActions<typeof userSlice.actions>;

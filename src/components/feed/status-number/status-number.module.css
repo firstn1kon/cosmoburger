@@ -1,0 +1,10 @@
+.list-orders {
+    margin: 0;
+    list-style: none;
+    grid-gap: 8px;
+    display: grid;
+    grid-auto-flow: column;
+    grid-template-rows: repeat(auto-fill, 22px);
+    overflow-x: auto;
+    height: 320px;
+}

@@ -18,7 +18,7 @@ export const MainPage = () => {
         <DndProvider backend={HTML5Backend}>
             {isError && <Error err={isError} reload={true}/>}
             {isLoading && <Spinner/>}
-            <div className="main-wrapper">
+            <div className="main-wrapper fadeIn">
                 <BurgerIngredients/>
                 <BurgerConstructor/>
             </div>

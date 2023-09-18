@@ -52,7 +52,7 @@ const BurgerConstructor = () => {
     const fetchOrder = () => {
         if(!user) return navigate('/login')
         const ingredients = [...saucesAndMains, {...bun}].map(ingredient => ingredient._id)
-        const dataOrder: {ingredients: string[]} = {ingredients}
+        const dataOrder = {ingredients}
         dispatch(sendOrder(dataOrder))
     }
 

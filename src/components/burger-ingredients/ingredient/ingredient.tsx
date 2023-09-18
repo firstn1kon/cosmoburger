@@ -6,7 +6,7 @@ import styles from '../burger-ingredients.module.css'
 interface ICurrentSection {
     data: IBasicIngredient[],
     type: TypesMenu,
-    ref: ForwardedRef<HTMLHeadingElement>
+    ref: ForwardedRef<HTMLHeadingElement>,
 }
 
 const Ingredient: FC <ICurrentSection> = forwardRef(({data, type}, ref) => {

@@ -1,5 +1,5 @@
 import {Routes, Route, useLocation, useNavigate}from "react-router-dom";
-import { MainPage, NotFoundPage, LoginPage, RegisterPage, ForgotPasswordPage, ResetPasswordPage, ProfilePage, ProfileOrdersPage } from "../../pages";
+import { MainPage, NotFoundPage, LoginPage, RegisterPage, ForgotPasswordPage, ResetPasswordPage, ProfilePage, ProfileOrdersPage, FeedPage } from "../../pages";
 import { OnlyAuth, OnlyUnAuth } from "../protected-route-element/proteced-route-element";
 import { useAppDispatch } from "../../hooks/store-hooks";
 import { fetchUser,  checkAuth} from "../../services/slices/user-slice";
@@ -40,6 +40,7 @@ function App() {
               <Route/>
               <Route path="/" element={<MainPage/>}/>
               <Route path="*" element={<NotFoundPage/>}/>
+              <Route path="/feed" element={<FeedPage/>}/>
               <Route path="/login" element={<OnlyUnAuth component={<LoginPage/>}/>}/>
               <Route path="/register" element={<OnlyUnAuth component={<RegisterPage/>}/>}/> 
               <Route path="/forgot-password" element={<OnlyUnAuth component={<ForgotPasswordPage/>}/>}/> 
