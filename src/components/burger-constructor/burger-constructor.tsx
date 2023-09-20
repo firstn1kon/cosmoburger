@@ -47,7 +47,9 @@ const BurgerConstructor = () => {
     [saucesAndMains, bun]);
     
     const dnoneOrFadeIn = saucesAndMains && isBunAdd ? styles.fadeIn : styles.dnone
-    const statusButton = isLoading ? <Spinner modal={false} loadText='Оформляем'/> : 'Оформить заказ'
+    const statusButton = isLoading 
+        ? <Spinner modal={false} loadText='Оформляем'/> 
+        : isBunAdd || helper ?  'Оформить заказ' : "Добавьте булку"
 
     const fetchOrder = () => {
         if(!user) return navigate('/login')
@@ -100,8 +102,8 @@ const BurgerConstructor = () => {
                     <p className="text text_type_digits-medium mr-2">{total? total : 0}</p>
                     <CurrencyIcon type="primary" />
                 </div>
-                <Button  
-                    disabled={helper || isLoading} 
+                <Button   
+                    disabled={helper || isLoading || !isBunAdd} 
                     htmlType="button" 
                     type="primary" 
                     size="large" 

@@ -1,4 +1,5 @@
 import { FC } from "react"
+import { TypeStatus } from "../../../utils/types/common.types"
 import styles from "../feed.module.css"
 
 interface IDisplayStatus {
@@ -10,13 +11,13 @@ const DisplayStatus: FC<IDisplayStatus> = ({status}) => {
     let renderStatus: string = ""
 
     switch (status) {
-        case "created":
+        case TypeStatus.CREATED:
             renderStatus = "Создан";
             break;
-        case "pending":
+        case TypeStatus.PENDING:
             renderStatus = "Готовится";
             break;
-        case "done":
+        case TypeStatus.DONE:
             renderStatus = "Выполнен";
             break;
         default: renderStatus = status

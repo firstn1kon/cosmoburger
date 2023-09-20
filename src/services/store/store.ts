@@ -5,32 +5,20 @@ import kit from "../slices/constructor-slice"
 import user from "../slices/user-slice"
 import feed from "../slices/feed-slice"
 import profile from "../slices/profile-slice"
+import orderData from "../slices/order-data-slice"
 import { socketMiddleware } from '../middlewares/socket-middleware';
-import { TWsActions } from '../../utils/types/websocket.types';
+import { feedWS } from '../slices/feed-slice';
+import { profileWS } from '../slices/profile-slice';
 
-const feedWS: TWsActions = {
-    wsInit: "feed/initWS",
-    wsOffline: "feed/closeWS",
-    onOpen: "feed/openWS",
-    onError: "feed/errorWS",
-    onMessage: "feed/messageWS",
-    onClose: "feed/handleClose"
-}
 
-const profileWS: TWsActions = {
-    wsInit: "profile/initWS",
-    wsOffline: "profile/closeWS",
-    onOpen: "profile/openWS",
-    onError: "profile/errorWS",
-    onMessage: "profile/messageWS",
-    onClose: "profile/handleClose"
-}
+
+const middlewares = [socketMiddleware(feedWS), socketMiddleware(profileWS)]
 
 const store = configureStore({
-    reducer: {ingredients, order, kit, user, feed, profile},
+    reducer: {ingredients, order, kit, user, feed, profile, orderData},
     middleware: getDefaultMiddleware => getDefaultMiddleware({
         serializableCheck: false,
-      }).concat([socketMiddleware(feedWS), socketMiddleware(profileWS)]),
+      }).concat([...middlewares]),
     devTools: process.env.NODE_ENV !== "production",
 });
 

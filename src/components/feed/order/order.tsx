@@ -1,12 +1,10 @@
-import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components"
-import { FC } from "react";
-import { FormattedDate } from "@ya.praktikum/react-developer-burger-ui-components";
+import { FC, useCallback } from "react";
 import { IBaseOrderWs } from "../../../utils/types/common.types";
 import { useAppSelector } from "../../../hooks/store-hooks";
 import { getIngredients } from "../../../services/slices/selectors";
-import { useCallback } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import { CurrencyIcon, FormattedDate } from "@ya.praktikum/react-developer-burger-ui-components"
 import DisplayStatus from "./display-status";
-
 import styles from "./order.module.css"
 
 interface IOrder extends IBaseOrderWs{
@@ -14,49 +12,43 @@ interface IOrder extends IBaseOrderWs{
 }
 
 interface ICreateData {
-    image: string | undefined;
+    image: string;
     more: null | number;
-    id: string | undefined;
-    alt: string | undefined;
+    id: string;
+    alt: string;
 }
 
 const Order: FC<IOrder> = ({createdAt, ingredients, name, number, status, showStatus = false}) => {
    
-
     const allIngredients = useAppSelector(getIngredients)
-
-
-    // const prepareData = ingredients.reduce((acc , curr) => {
-    //     if(acc[curr]) {
-    //         acc[curr] = {...acc[curr], qty: acc[curr].qty +1}
-    //     }
-    //     else {
-    //         const keys = allIngredients.find(ingredient => ingredient._id === curr)
-    //         acc[curr] = {qty: 1, price: keys?.price, image: keys?.image_mobile, name: keys?.name}
-    //     }
-    //     return acc
-    // },{} as any)
+    const navigate = useNavigate()
+    const location = useLocation()
 
     const createData = useCallback(() => {
         let total = 0;
         const thumbs: ICreateData[] = []
         ingredients.forEach((ingredientInOrder,i, arr) => {
                 const dataIngredient = allIngredients.find(ingredient => ingredient._id === ingredientInOrder)
-                total += dataIngredient?.price ? dataIngredient?.price : 0
-                if(i < 6) thumbs.push({
-                    image: dataIngredient?.image_mobile, 
-                    more: i === 5 ? arr.length - (i+1) : null,
-                    id: dataIngredient?._id,
-                    alt: dataIngredient?.name
-                })
+                if(dataIngredient) {
+                    total += dataIngredient?.price ? dataIngredient?.price : 0
+                    if(i < 6) thumbs.push({
+                        image: dataIngredient?.image_mobile, 
+                        more: i === 5 ? arr.length - (i+1) : null,
+                        id: dataIngredient?._id,
+                        alt: dataIngredient?.name
+                    })
+                }
         })
         return {total, thumbs}
     },[ingredients, allIngredients])
 
     const dataForRender = createData()
 
+    const openModal = () => {
+        navigate(`${location.pathname}/${number}`, { state: { modal: location, id: number}})
+    }
     return (
-        <div className={`${styles.order} p-6 ${styles.fadeInFromLeft}`}>
+        <div className={`${styles.order} p-6 ${styles.fadeInFromLeft}`} onClick={openModal}>
             <div className={`${styles.header} mb-6`}>
                 <div className="text text_type_digits-default">{number}</div>
                 <time className="text text_type_main-default text_color_inactive">

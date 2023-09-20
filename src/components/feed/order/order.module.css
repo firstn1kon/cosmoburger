@@ -4,6 +4,12 @@
     background: #1C1C21;
     box-shadow: 0px 0px 1px 0px rgba(0, 0, 0, 0.04), 0px 0px 2px 0px rgba(0, 0, 0, 0.06), 0px 4px 8px 0px rgba(0, 0, 0, 0.04);
     border-radius: 40px;
+    transition: all .3s;
+    cursor: pointer;
+}
+.order:hover{
+    background: #23232b;
+    /* box-shadow: 0px 4px 8px 0px rgba(114, 81, 203, 0.526); */
 }
 
 .header {
@@ -65,11 +71,11 @@
 @keyframes fadeInFromLeft {
 	0% {
 		opacity: 0;
-        transform: translateX(-200%) scale(0.2);
+        transform:translate3d(-100%,0,0)
         
 	}
 	100% {
 		opacity: 1;
-        transform: translateX(0%) scale(1);
+        transform:translateZ(0)
 	}
 }

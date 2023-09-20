@@ -1,19 +1,23 @@
-import Order from "./order/order"
-import StatusNumber from "./status-number/status-number"
-import styles from "./feed.module.css"
 import { useAppDispatch, useAppSelector } from "../../hooks/store-hooks"
 import { useEffect, useMemo } from "react"
 import { initWS, closeWS } from "../../services/slices/feed-slice"
-import { getFeedData, getFeedStatus} from "../../services/slices/selectors"
+import { getFeedData, getFeedStatus, getFeedError, getFeedUrl} from "../../services/slices/selectors"
+import { _wsFeed } from "../../utils/api"
+import Error from "../error/error"
 import Spinner from "../spinner/spinner"
+import Order from "./order/order"
+import StatusNumber from "./status-number/status-number"
+import styles from "./feed.module.css"
 
 const Feed = () => {
     const dispatch = useAppDispatch();
     const {total, totalToday, orders} = useAppSelector(getFeedData)
     const statusWS = useAppSelector(getFeedStatus)
+    const errorWS = useAppSelector(getFeedError)
+    const urlWS = useAppSelector(getFeedUrl)
 
     useEffect(()=> {
-        dispatch(initWS("wss://norma.nomoreparties.space/orders/all"))
+        dispatch(initWS(_wsFeed))
         return () => {
             dispatch(closeWS())
         }
@@ -23,8 +27,11 @@ const Feed = () => {
     const doneOrders = useMemo(() => orders.filter(order => order.status === "done").map(order => order.number),[orders])
     const pendingOrders = useMemo(() => orders.filter(order => order.status === "pending").map(order => order.number),[orders])
 
+    if(errorWS) return <Error err={`${errorWS} - ${statusWS}, adress: ${urlWS}`} inline={true}/>
+
     return (
-        <>  {statusWS === "init" && <Spinner/>}
+        <>  
+            {statusWS === "init" && <Spinner/>}
             <div className="container">
                 <h2 className={`${styles.title} text text_type_main-large mt-10 mb-10 fadeIn`}>Лента заказов</h2>
             </div>
@@ -38,7 +45,7 @@ const Feed = () => {
                             <StatusNumber title="Готовы:" orders={doneOrders} extraClass={styles['second-color']}/>
                         </div>
                         <div>
-                            <StatusNumber title="В работе:" idleText="Все заказы выполнены" orders={pendingOrders}/>
+                            <StatusNumber title="В работе:" idleText="Все заказы выполнены" extraClass="beatheart" orders={pendingOrders}/>
                         </div>
                     </div>
                     <h3 className="text text_type_main-medium mt-15">Выполнено за все время:</h3>
@@ -48,7 +55,6 @@ const Feed = () => {
                 </div>
             </div>
         </>
-
     )
 }
 

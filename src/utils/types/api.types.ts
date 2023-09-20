@@ -1,4 +1,4 @@
-import { IBasicIngredient } from "./common.types"
+import { IBasicIngredient, IBaseOrderInModal } from "./common.types"
 
 export interface IResponseIngredients {
     success: boolean,
@@ -31,6 +31,11 @@ export type TResponseUserData = Omit<IResponseWithTokens, "accessToken" | "refre
 export interface IBasicResponseUser {
     success: IResponseIngredients['success'],
     message: string
+}
+
+export interface IOrderInModalResponse {
+    success: IResponseIngredients['success'];
+    orders: IBaseOrderInModal[];
 }
 
 export interface IBasicUserPostData {

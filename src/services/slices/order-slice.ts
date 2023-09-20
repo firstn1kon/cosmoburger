@@ -75,5 +75,4 @@ export const sendOrder = createAsyncThunk(
     postOrder
 )
 
-
 export type TOrderActions = SliceActions<typeof orderSlice.actions>;

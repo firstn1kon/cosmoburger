@@ -1,5 +1,5 @@
-import Nav from "./nav/nav"
 import { FC } from "react"
+import Nav from "./nav/nav"
 import styles from "./profile.module.css"
 
 interface IProfile {

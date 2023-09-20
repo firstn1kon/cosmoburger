@@ -30,7 +30,7 @@ const userSlice = createSlice({
     reducers: {
         resetTransfer: state => {state.transfer = false;},
         checkAuth: state => {state.isCkechedAuth = true;},
-        resetError: (state) => {state.isError= false}
+        resetError: state => {state.isError= false}
     },
     extraReducers: builder =>
         builder 
@@ -115,7 +115,7 @@ const userSlice = createSlice({
                 state.isLoading = true
                 state.isError = false
             })
-            .addCase(logoutUser.fulfilled, ()=>  ({...initialState, isCkechedAuth: true}))
+            .addCase(logoutUser.fulfilled, () => ({...initialState, isCkechedAuth: true}))
             .addCase(logoutUser.rejected, (state, action) => {
                 state.isLoading = false;
                 state.isError = action.error.message

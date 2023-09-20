@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { SliceActions } from "../../utils/types/common.types";
-import { IFeedWsResponse } from "../../utils/types/websocket.types";
+import { IFeedWsResponse, TWsActions } from "../../utils/types/websocket.types";
 
 interface IFeedState {
     data: IFeedWsResponse
@@ -28,10 +28,11 @@ const feedSlice = createSlice({
         initWS: (state, action: PayloadAction<string>) => {
             state.status = "init";
             state.url = action.payload
+            state.error = null
         },
         closeWS: state => {state.status = "closed"},
         openWS: state => {state.status = "online"},
-        errorWS: (state, action)=> {
+        errorWS: (state, action: PayloadAction<string>)=> {
             state.status = "error";
             state.error = action.payload
         },
@@ -52,7 +53,13 @@ export const {
 
 } = actions;
 
-
-
+export const feedWS: TWsActions = {
+    wsInit: "feed/initWS",
+    wsOffline: "feed/closeWS",
+    onOpen: "feed/openWS",
+    onError: "feed/errorWS",
+    onMessage: "feed/messageWS",
+    onClose: "feed/handleClose"
+}
 
 export type TFeedActions = SliceActions<typeof feedSlice.actions>;

@@ -50,6 +50,11 @@ body {
   animation: fadeIn .2s linear;
 }
 
+.beatheart .up {
+  animation: heart-pulse .6s linear;
+  animation-iteration-count: 4;
+}
+
 @keyframes fadeIn {
 	0% {
 		opacity: 0
@@ -58,3 +63,20 @@ body {
 		opacity: 1;
 	}
 }
+
+@keyframes heart-pulse {
+0% {
+      transform: Scale(1);
+      color: #F2F2F3;        
+}
+  50% {
+      transform: Scale(0.97);
+      color: #ffff08;        
+  }
+100% {
+      transform: Scale(1);
+      color: #F2F2F3;        
+
+}
+}
+

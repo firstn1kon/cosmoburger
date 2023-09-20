@@ -4,6 +4,7 @@ import { TUserActions } from "../../services/slices/user-slice"
 import { TKitActions } from "../../services/slices/constructor-slice"
 import { TFeedActions } from "../../services/slices/feed-slice"
 import { TProfileActions } from "../../services/slices/profile-slice"
+import { TOrderDataStateActions } from "../../services/slices/order-data-slice"
 import { IBaseOrderWs } from "./common.types"
 
 type TActions = 'wsInit' | "wsOffline" | "onOpen" | "onError" | "onMessage" | "onClose" 
@@ -19,6 +20,13 @@ export interface IFeedWsResponse{
     totalToday: number;
 }
 
-export type TAllAppActions = TOrderActions | TIngredientsActions | TUserActions | TKitActions | TFeedActions | TProfileActions
+export type TAllAppActions = 
+    TOrderActions | 
+    TIngredientsActions | 
+    TUserActions | 
+    TKitActions | 
+    TFeedActions | 
+    TProfileActions | 
+    TOrderDataStateActions
 
 

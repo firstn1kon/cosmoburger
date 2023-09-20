@@ -23,6 +23,12 @@ export enum TypesMenu  {
     SAUCE = "sauce"
 }
 
+export enum TypeStatus  {
+    DONE = "done",
+    CREATED = "created",
+    PENDING = "pending"
+}
+
 export interface IBaseOrderWs  {
     _id: string;
     createdAt: string;
@@ -31,6 +37,11 @@ export interface IBaseOrderWs  {
     name: string;
     number: number;
     status: string;
+}
+
+export interface IBaseOrderInModal extends IBaseOrderWs {
+    owner: string;
+    __v: number;
 }
 
  export  type SliceActions<T> = {
