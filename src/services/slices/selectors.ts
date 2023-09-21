@@ -22,3 +22,17 @@ export const getTransfer = (state: RootState) => state.user.transfer
 export const getUserData = (state: RootState) => state.user.user
 export const getUserName = (state: RootState) => state.user.user.name
 export const getIsAuth = (state: RootState) => state.user.isCkechedAuth
+// Feed Slice
+export const getFeedData = (state: RootState) => state.feed.data
+export const getFeedStatus = (state: RootState) => state.feed.status
+export const getFeedError = (state: RootState) => state.feed.error
+export const getFeedUrl = (state: RootState) => state.feed.url
+// Profile Slice
+export const getProfiledData = (state: RootState) => state.profile.data 
+export const getProfileStatus = (state: RootState) => state.profile.status 
+export const getProfileError = (state: RootState) => state.profile.error
+export const getProfileUrl = (state: RootState) => state.profile.url
+// OrderData Slice
+export const getCurrentOrderData = (state: RootState) => state.orderData.orders
+export const getIsLoadingOrderData = (state: RootState) => state.orderData.isLoading
+export const getIsErrorOrderData = (state: RootState) => state.orderData.isError

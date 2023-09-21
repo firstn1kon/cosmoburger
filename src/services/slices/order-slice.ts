@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { postOrder } from "../../utils/api";
+import { SliceActions } from "../../utils/types/common.types";
 
 interface IOrderState {
     data: {
@@ -73,3 +74,5 @@ export const sendOrder = createAsyncThunk(
     'order/sendOrder',
     postOrder
 )
+
+export type TOrderActions = SliceActions<typeof orderSlice.actions>;

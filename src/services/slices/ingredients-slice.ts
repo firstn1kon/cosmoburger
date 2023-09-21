@@ -1,6 +1,8 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import { getAllIngredients } from "../../utils/api";
 import { IBasicIngredient } from "../../utils/types/common.types";
+import { SliceActions } from "../../utils/types/common.types";
+
 
 interface IingredientsState {
     ingredients: IBasicIngredient[], 
@@ -49,3 +51,5 @@ export const ingredientsFetch = createAsyncThunk(
     'ingredients/ingredientsFetch',
     getAllIngredients
 )
+
+export type TIngredientsActions = SliceActions<typeof mainSlice.actions>;

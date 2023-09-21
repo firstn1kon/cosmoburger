@@ -1,13 +1,14 @@
 import { createSlice, nanoid, PayloadAction } from "@reduxjs/toolkit";
 import { IConcstructorIngredient } from "../../utils/types/common.types";
 import sample from "../../images/samplebun.png"
+import { SliceActions } from "../../utils/types/common.types";
+import { IBasicIngredient } from "../../utils/types/common.types";
 
 interface IBasicbun {
     name: string, 
     price: number, 
     image_mobile: string, 
     _id: string
-
 }
 
 interface IConstructorState {
@@ -44,14 +45,14 @@ const constructorSlice = createSlice({
                 }
                 state.helper = false;
             },
-            prepare: (payload) => ({payload: {...payload, _uid: nanoid()}})
+            prepare: (payload: IBasicIngredient) => ({payload: {...payload, _uid: nanoid()}})
           },
-        deleteFromConstructor: (state, action) => {
+        deleteFromConstructor: (state, action: PayloadAction<string>) => {
             const index = state.saucesAndMains.findIndex(item => item._uid === action.payload)
             if (index !== -1) state.saucesAndMains.splice(index, 1)
-            if(!state.saucesAndMains.length && !state.bun) state.helper = true
+            if(!state.saucesAndMains.length && !state.bun._id) state.helper = true
         },
-        sortInConstrucor: (state, action) => {
+        sortInConstrucor: (state, action: PayloadAction<{dragIndex: number; hoverIndex: number}>) => {
             let temp = state.saucesAndMains[action.payload.hoverIndex]
             state.saucesAndMains[action.payload.hoverIndex] = state.saucesAndMains[action.payload.dragIndex];
             state.saucesAndMains[action.payload.dragIndex] = temp
@@ -71,3 +72,5 @@ export const {
     sortInConstrucor,
     resetConstructor,
 } = actions;
+
+export type TKitActions = SliceActions<typeof constructorSlice.actions>;

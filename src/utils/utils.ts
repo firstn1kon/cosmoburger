@@ -22,6 +22,10 @@ export const removeAllTokens = () => {
     localStorage.removeItem('refreshToken')
 }
 
+export const getAccessTokenWs = () => localStorage.getItem('accessToken')?.replace("Bearer ", "")
+
 //RegEx utils
 export const regexProfileUrl = new RegExp(/\/profile/);
+export const regexFeedeUrl = new RegExp(/\/feed/);
 export const regexEmail = new RegExp(/[a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9_-]+/);
+export const regexURLorder = new RegExp(/^\d+$/)

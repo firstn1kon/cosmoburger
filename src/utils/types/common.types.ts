@@ -22,3 +22,28 @@ export enum TypesMenu  {
     MAIN = "main",
     SAUCE = "sauce"
 }
+
+export enum TypeStatus  {
+    DONE = "done",
+    CREATED = "created",
+    PENDING = "pending"
+}
+
+export interface IBaseOrderWs  {
+    _id: string;
+    createdAt: string;
+    updatedAt: string;
+    ingredients: string[];
+    name: string;
+    number: number;
+    status: string;
+}
+
+export interface IBaseOrderInModal extends IBaseOrderWs {
+    owner: string;
+    __v: number;
+}
+
+ export  type SliceActions<T> = {
+    [K in keyof T]: T[K] extends (...args: any[]) => infer A ? A : never;
+}[keyof T]

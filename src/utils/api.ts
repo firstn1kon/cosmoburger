@@ -1,14 +1,16 @@
 import { setTokens, getAccessToken, getRefreshToken, removeAllTokens } from "./utils";
 import { IResponseRefreshToken, IRequest, IResponseIngredients, IBasicResponseUser, 
          IBasicUserPostData, IResponseWithTokens,TLoginPostData,TFogotPostData,
-         TResetPostData,TPatchDataUser,IResponsePostOrder,TResponseUserData
+         TResetPostData,TPatchDataUser,IResponsePostOrder,TResponseUserData,
+         IOrderInModalResponse
  } from "./types/api.types";
 
-
+export const _wsFeed = 'wss://norma.nomoreparties.space/orders/all'
+export const _wsProfile = 'wss://norma.nomoreparties.space/orders?token='
+export const _loginPage = '/login'
 const _apiBase = 'https://norma.nomoreparties.space/api';
-const _loginPage = '/login'
 
-const refreshToken = async () : Promise<IResponseRefreshToken>=>  {
+export const refreshToken = async () : Promise<IResponseRefreshToken>=>  {
     const json= JSON.stringify({token: getRefreshToken()})
         const res = await request<IResponseRefreshToken>(`${_apiBase}/auth/token`, 'POST', json);
         if (res.success) {
@@ -17,7 +19,7 @@ const refreshToken = async () : Promise<IResponseRefreshToken>=>  {
         return res
 }
 
-const  request= async  <T> (
+const request = async  <T> (
     url: IRequest['url'], 
     method : IRequest['method'] = 'GET', 
     body : IRequest['body'] = undefined, 
@@ -128,4 +130,9 @@ export const postLogoutUser = async () => {
         removeAllTokens()
     }
     return res
+}
+
+export const getOrderData = async (number: string) => {
+    const res = await request<IOrderInModalResponse>(`${_apiBase}/orders/${number}`, 'GET');
+    return res.orders
 }

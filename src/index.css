@@ -20,6 +20,11 @@ body {
   column-gap: 40px;
 }
 
+.container {
+  max-width: 1260px;
+  margin: 0 auto;
+}
+
 /* Firefox */
 * {
   scrollbar-width: auto;
@@ -29,6 +34,7 @@ body {
 /* Chrome, Edge, and Safari */
 *::-webkit-scrollbar {
   width: 8px;
+  height: 8px
 }
 
 *::-webkit-scrollbar-track {
@@ -38,5 +44,39 @@ body {
 *::-webkit-scrollbar-thumb {
   background-color: #8585AD;
   border-radius: 0px;
+}
+
+.fadeIn {
+  animation: fadeIn .2s linear;
+}
+
+.beatheart .up {
+  animation: heart-pulse .6s linear;
+  animation-iteration-count: 4;
+}
+
+@keyframes fadeIn {
+	0% {
+		opacity: 0
+	}
+	100% {
+		opacity: 1;
+	}
+}
+
+@keyframes heart-pulse {
+0% {
+      transform: Scale(1);
+      color: #F2F2F3;        
+}
+  50% {
+      transform: Scale(0.97);
+      color: #ffff08;        
+  }
+100% {
+      transform: Scale(1);
+      color: #F2F2F3;        
+
+}
 }
 

@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { postRegisterUser, postLoginUser, postFogotPassword, postResetPassword, getUser, patchUser, postLogoutUser } from "../../utils/api";
+import { SliceActions } from "../../utils/types/common.types";
 
 interface IUserState {
     user: {
@@ -29,7 +30,7 @@ const userSlice = createSlice({
     reducers: {
         resetTransfer: state => {state.transfer = false;},
         checkAuth: state => {state.isCkechedAuth = true;},
-        resetError: (state) => {state.isError= false}
+        resetError: state => {state.isError= false}
     },
     extraReducers: builder =>
         builder 
@@ -114,7 +115,7 @@ const userSlice = createSlice({
                 state.isLoading = true
                 state.isError = false
             })
-            .addCase(logoutUser.fulfilled, ()=>  ({...initialState, isCkechedAuth: true}))
+            .addCase(logoutUser.fulfilled, () => ({...initialState, isCkechedAuth: true}))
             .addCase(logoutUser.rejected, (state, action) => {
                 state.isLoading = false;
                 state.isError = action.error.message
@@ -168,3 +169,5 @@ export const logoutUser = createAsyncThunk(
     'user/logout-user',
     postLogoutUser
 )
+
+export type TUserActions = SliceActions<typeof userSlice.actions>;
