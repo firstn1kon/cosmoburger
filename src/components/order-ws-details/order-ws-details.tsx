@@ -4,10 +4,12 @@ import { useAppDispatch, useAppSelector } from "../../hooks/store-hooks"
 import { useParams } from "react-router-dom"
 import { getCurrentOrderData, getIngredients, getIsErrorOrderData, getIsLoadingOrderData } from "../../services/slices/selectors"
 import { CurrencyIcon, FormattedDate } from "@ya.praktikum/react-developer-burger-ui-components"
+import { regexURLorder } from "../../utils/utils"
 import DisplayStatus from "../feed/order/display-status"
 import IngredientInModal from "./ingredient"
 import Error from "../error/error"
 import Skeleton from "./skeleton"
+import Error404 from "../error-404/error-404"
 import styles from "./order-ws-details.module.css"
 
 interface IObjectData {
@@ -30,6 +32,7 @@ const OrderWsDetails = () => {
     const [orderData] = useAppSelector(getCurrentOrderData)
     const isLoading = useAppSelector(getIsLoadingOrderData)
     const isError = useAppSelector(getIsErrorOrderData)
+    const testURL = regexURLorder.test(orderId as string)
 
     const createData = useCallback(() => {
         let total = 0;
@@ -58,7 +61,8 @@ const OrderWsDetails = () => {
 
     if(isError) return <Error err={isError} inline={true}/>
     if (isLoading) return <Skeleton/>
-
+    if(!orderData || !testURL) return <Error404/>
+    
     return (
         <div className={`${styles.wrapper} fadeIn`}>
             <h2 className={`${styles.title} text text_type_digits-default mb-10`}>#{orderData?.number}</h2>
