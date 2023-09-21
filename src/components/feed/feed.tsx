@@ -37,7 +37,7 @@ const Feed = () => {
             </div>
             <div className="main-wrapper fadeIn">
                 <div className={styles.orders}>
-                    {orders.map(order => <Order key={order._id} {...order}/>)}
+                    {orders.map(order => <Order key={order._id} data={order}/>)}
                 </div>
                 <div className={styles.stats}>
                     <div className={styles['orders-stats']}>

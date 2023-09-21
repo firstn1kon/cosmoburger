@@ -132,7 +132,7 @@ export const postLogoutUser = async () => {
     return res
 }
 
-export const getOrderData = async (number: string | undefined) => {
+export const getOrderData = async (number: string) => {
     const res = await request<IOrderInModalResponse>(`${_apiBase}/orders/${number}`, 'GET');
     return res.orders
 }

@@ -7,8 +7,9 @@ import { CurrencyIcon, FormattedDate } from "@ya.praktikum/react-developer-burge
 import DisplayStatus from "./display-status";
 import styles from "./order.module.css"
 
-interface IOrder extends IBaseOrderWs{
+interface IOrder{
     showStatus?: boolean;
+    data: IBaseOrderWs
 }
 
 interface ICreateData {
@@ -18,7 +19,9 @@ interface ICreateData {
     alt: string;
 }
 
-const Order: FC<IOrder> = ({createdAt, ingredients, name, number, status, showStatus = false}) => {
+const Order: FC<IOrder> = ({data, showStatus = false}) => {
+
+    const {createdAt, ingredients, name, number, status} = data
    
     const allIngredients = useAppSelector(getIngredients)
     const navigate = useNavigate()

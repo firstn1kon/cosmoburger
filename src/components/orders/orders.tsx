@@ -28,7 +28,7 @@ const Orders = () => {
     return (
         <div className={styles.orders}>
             {statusWS === "init" && <Spinner/>}
-            {orders && [...orders].reverse().map(order => <Order key={order._id} showStatus={true} {...order}/>)}
+            {orders && [...orders].reverse().map(order => <Order key={order._id} showStatus={true} data={order}/>)}
         </div>
     )
 }

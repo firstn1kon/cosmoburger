@@ -55,7 +55,7 @@ const OrderWsDetails = () => {
     const {total, ingredients} = createData()
 
     useEffect(()=> {
-        dispatch(orderDataFetch(orderId))
+        if(typeof orderId === "string") dispatch(orderDataFetch(orderId))
     //eslint-disable-next-line
     },[])
 

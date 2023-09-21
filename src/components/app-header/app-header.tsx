@@ -15,7 +15,7 @@ const AppHeader = () => {
 
   const showUserName= user ? user : 'Личный кабинет'
 
-  const logout = (e: MouseEvent<HTMLDivElement>) => {
+  const logout = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
     dispatch(logoutUser())
 }
@@ -46,7 +46,9 @@ const AppHeader = () => {
                 </NavLink>
               </li>
               {user 
-                ? <li><div onClick={logout} className={styles.logout}><LogoutIcon type="secondary"/></div></li>
+                ? <li style={{position: "relative"}}>
+                    <button onClick={logout} className={styles.logout}><LogoutIcon type="secondary"/></button>
+                  </li>
                 : null
               }
             </ul>
