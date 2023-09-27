@@ -13,7 +13,7 @@ interface IUserState {
     transfer: boolean 
 }
 
-const initialState: IUserState = {
+export const initialState: IUserState = {
     user: {
         name: "",
         email: ""

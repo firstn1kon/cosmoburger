@@ -9,7 +9,7 @@ interface IOrderDataState {
     isError: boolean | undefined | string,
 }
 
-const initialState: IOrderDataState = {
+export const initialState: IOrderDataState = {
     orders: [],
     isLoading: true,
     isError: false,
@@ -21,7 +21,10 @@ const orderDataSlice = createSlice({
     reducers: {},
     extraReducers: builder =>
         builder
-            .addCase(orderDataFetch.pending, state => {state.isLoading = true})
+            .addCase(orderDataFetch.pending, state => {
+                state.isLoading = true;
+                state.isError = false;
+            })
             .addCase(orderDataFetch.fulfilled, (state, action)=> {
                 state.isLoading = false;
                 action.payload.length === 1 ? state.orders = action.payload : state.orders = [];

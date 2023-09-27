@@ -18,7 +18,7 @@ interface IConstructorState {
     isBunAdd: boolean, 
 }
 
-const initialState: IConstructorState = {
+export const initialState: IConstructorState = {
         bun: {
             name: "выберете булку",
             price: 0,

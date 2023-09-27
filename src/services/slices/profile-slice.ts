@@ -4,12 +4,12 @@ import { IFeedWsResponse, TWsActions } from "../../utils/types/websocket.types";
 
 interface IProfileState {
     data: IFeedWsResponse
-    error: any,
+    error: string | null,
     status: string,
     url: string
 }
 
-const initialState: IProfileState = {
+export const initialState: IProfileState = {
     data: {
         success: false,
         orders: [],
@@ -48,8 +48,11 @@ export default reducer;
 
 export const {
     initWS,
-    closeWS
-    
+    closeWS,
+    openWS,
+    errorWS,
+    messageWS,
+    handleClose
 } = actions;
 
 export const profileWS: TWsActions = {

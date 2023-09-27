@@ -16,7 +16,7 @@ interface IOrderState {
     isError: boolean | undefined | string 
 }
 
-const initialState: IOrderState = {
+export const initialState: IOrderState = {
     data: {
         success: false,
         name: "",

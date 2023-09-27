@@ -11,7 +11,7 @@ interface IingredientsState {
     currentTab: "bun" | "main" | "sauce"
 }
 
-const initialState: IingredientsState = {
+export const initialState: IingredientsState = {
     ingredients: [],
     isLoading: false,
     isError: false,
@@ -26,7 +26,10 @@ const mainSlice = createSlice({
     },
     extraReducers: builder =>
         builder
-            .addCase(ingredientsFetch.pending, state => {state.isLoading = true})
+            .addCase(ingredientsFetch.pending, state => {
+                state.isLoading = true;
+                state.isError = false;
+            })
             .addCase(ingredientsFetch.fulfilled, (state, action)=> {
                 state.isLoading = false;
                 state.ingredients = action.payload;
