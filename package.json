@@ -1,6 +1,7 @@
 {
   "name": "react-burger",
   "version": "0.1.0",
+  "homepage": "https://firstn1kon.github.io/cosmoburger",
   "private": true,
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.5",
@@ -28,9 +29,11 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --watchAll --detectOpenHandles",
-    "testr": "react-scripts test --watchAll --detectOpenHandles --reporters=jest-html-reporters", 
+    "testr": "react-scripts test --watchAll --detectOpenHandles --reporters=jest-html-reporters",
     "eject": "react-scripts eject",
-    "cypress": "concurrently \"react-scripts start\" \"npx cypress open\""
+    "cypress": "concurrently \"react-scripts start\" \"npx cypress open\"",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": [
@@ -54,6 +57,7 @@
     "@4tw/cypress-drag-drop": "^2.2.5",
     "concurrently": "^8.2.1",
     "cypress": "^13.2.0",
+    "gh-pages": "^6.0.0",
     "jest-html-reporters": "^3.1.4"
   }
 }
