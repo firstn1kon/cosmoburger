@@ -2,7 +2,7 @@ import '@4tw/cypress-drag-drop'
 
 describe('Constructor spec', () => {
   beforeEach(() => {
-    cy.viewport(1280, 720)
+    cy.viewport(1920, 1080)
     cy.visit('/')
     cy.get('[class^=burger-ingredients_item__]').eq(1).as('fluebun')
     cy.get('[class^=burger-ingredients_item__]').eq(2).as('spicy')

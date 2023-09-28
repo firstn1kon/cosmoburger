@@ -11,7 +11,7 @@ SPA приложение с полной функциональностью:
 STACK: `JS`, `TS`, `React`, `Redux`, `React DnD`, `React Router`, `Jest`, `Cypress`
 ## Ссылка на проект
 
-[GitHub Pages](http://localhost:3000)
+[GitHub Pages](https://firstn1kon.github.io/cosmoburger/#/)
 
 ## Сборка CRA
 
