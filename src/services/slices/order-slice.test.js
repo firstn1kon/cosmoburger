@@ -59,7 +59,7 @@ describe("Order slice thunks", () => {
     let originalFetch;
     beforeEach(() => {
         originalFetch = global.fetch;
-        global.fetch = jest.fn(postOrder());
+        global.fetch = jest.fn(postOrder);
     });
     afterEach(() => {
         global.fetch = originalFetch;
