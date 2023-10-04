@@ -39,7 +39,6 @@ function App() {
           <AppHeader/>
           <main>
             <Routes location={background || location}>
-              <Route/>
               <Route path="/" element={<MainPage/>}/>
               <Route path="*" element={<NotFoundPage/>}/>
               <Route path="/feed" element={<FeedPage/>}/>
