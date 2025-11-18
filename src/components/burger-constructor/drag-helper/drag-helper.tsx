@@ -6,7 +6,7 @@ const DragHelper = () => {
     return (
         <div className={styles.helper}>
             <p className="text text_type_main-medium">Перетащите сюда булки, соусы и начинки</p>
-            <img className="mt-15" src="https://code.s3.yandex.net/react/code/core.png" alt="собери свой бургер"></img>
+            <img className="mt-15" src={ingrediens} alt="собери свой бургер"></img>
         </div>
     )
 }
