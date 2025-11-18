@@ -5,10 +5,10 @@ import { IResponseRefreshToken, IRequest, IResponseIngredients, IBasicResponseUs
          IOrderInModalResponse
  } from "./types/api.types";
 
-export const _wsFeed = 'wss://norma.nomoreparties.space/orders/all'
-export const _wsProfile = 'wss://norma.nomoreparties.space/orders?token='
+export const _wsFeed = 'wss://norma.education-services.ru/orders/all'
+export const _wsProfile = 'wss://norma.education-services.ru/orders?token='
 export const _loginPage = '/login'
-const _apiBase = 'https://norma.nomoreparties.space/api';
+const _apiBase = 'https://norma.education-services.ru/api';
 
 export const refreshToken = async () : Promise<IResponseRefreshToken>=>  {
     const json= JSON.stringify({token: getRefreshToken()})

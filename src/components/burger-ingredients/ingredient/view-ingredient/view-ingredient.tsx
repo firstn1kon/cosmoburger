@@ -1,5 +1,5 @@
 import { useDrag } from "react-dnd";
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useAppSelector } from "../../../../hooks/store-hooks";
 import { createSelector } from "@reduxjs/toolkit";
 import { getBun, getSaucesAndMains } from '../../../../services/slices/selectors';
@@ -27,6 +27,7 @@ const ViewIngredient: FC<ICurrentIngredient> = ({data}) => {
 
     const count = useAppSelector(countIngredient)
     const navigate = useNavigate()
+    const location = useLocation();
 
     const[{opacity}, dragRef] = useDrag({
         type: 'ingredients',
@@ -37,7 +38,7 @@ const ViewIngredient: FC<ICurrentIngredient> = ({data}) => {
     });
 
     const openModal = () => {
-        navigate(`/ingredients/${data._id}`, { state: { modal: true, id:  data._id}})
+        navigate(`/ingredients/${data._id}`, { state: { modal: location, id:  data._id}})
     }
 
     return (
