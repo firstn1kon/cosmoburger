@@ -1,8 +1,9 @@
 {
   "files": {
     "main.css": "/cosmoburger/static/css/main.07a04ea0.css",
-    "main.js": "/cosmoburger/static/js/main.41254aa1.js",
+    "main.js": "/cosmoburger/static/js/main.58fb392f.js",
     "static/js/787.2b4cbca8.chunk.js": "/cosmoburger/static/js/787.2b4cbca8.chunk.js",
+    "static/media/ingredients.svg": "/cosmoburger/static/media/ingredients.f9edfaddcc9772f4d35159534ef4131a.svg",
     "static/media/astronaut.svg": "/cosmoburger/static/media/astronaut.a9f51fe9590a560a1e9954ac25a0953c.svg",
     "static/media/samplebun.png": "/cosmoburger/static/media/samplebun.e8f4affa32fb48af1bc8.png",
     "static/media/JetBrainsMono-Bold.woff2": "/cosmoburger/static/media/JetBrainsMono-Bold.c232d532ea5a5189a278.woff2",
@@ -17,11 +18,11 @@
     "index.html": "/cosmoburger/index.html",
     "static/media/error.svg": "/cosmoburger/static/media/error.163d212b1c24a1ac88710a8604923e72.svg",
     "main.07a04ea0.css.map": "/cosmoburger/static/css/main.07a04ea0.css.map",
-    "main.41254aa1.js.map": "/cosmoburger/static/js/main.41254aa1.js.map",
+    "main.58fb392f.js.map": "/cosmoburger/static/js/main.58fb392f.js.map",
     "787.2b4cbca8.chunk.js.map": "/cosmoburger/static/js/787.2b4cbca8.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.07a04ea0.css",
-    "static/js/main.41254aa1.js"
+    "static/js/main.58fb392f.js"
   ]
 }
