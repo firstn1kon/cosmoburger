@@ -31,7 +31,10 @@ const profileSlice = createSlice({
             state.error = null
         },
         closeWS: state => {state.status = "closed"},
-        openWS: state => {state.status = "online"},
+        openWS: state => {
+            state.status = "online"; 
+            state.error = null
+        },
         errorWS: (state, action: PayloadAction<string>)=> {
             state.status = "error";
             state.error = action.payload
